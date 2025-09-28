@@ -1,0 +1,15 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Resources/User Interface/Styles/MainMenuStyle.uss" />
+    <ui:VisualElement name="Container" style="flex-grow: 1;">
+        <ui:Label text="Not Another Horror Story!" class="title" style="flex-direction: column; justify-content: center; align-items: center; align-self: center; align-content: center; width: auto; height: 50px; -unity-text-align: middle-left;" />
+    </ui:VisualElement>
+    <ui:VisualElement class="buttons" style="flex-grow: 1; align-items: center; justify-content: center; opacity: 1; width: auto; height: 400px; align-content: auto; align-self: auto;">
+        <ui:Button text="Play" name="BTN_Play" class="button" style="background-size: 220px 100%;" />
+        <ui:Button text="Settings" name="BTN_Options" class="button" style="background-size: 220px 100%;" />
+        <ui:Button text="Quit" name="BTN_QuitGame" class="button" style="background-size: 220px 100%;" />
+    </ui:VisualElement>
+    <ui:VisualElement style="flex-grow: 1; flex-direction: column; height: auto; width: 706px; flex-shrink: 1; flex-wrap: wrap; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); align-content: auto; align-items: stretch; justify-content: flex-start; position: absolute; top: 542px; left: 1087px; flex-basis: auto; align-self: auto; margin-top: 25px; margin-right: 25px; margin-bottom: 25px; margin-left: 25px; padding-top: 28px; padding-right: 28px; padding-bottom: 28px; padding-left: 28px;">
+        <ui:Toggle label="Use Custom Scene?" name="TGL_AllowCustomScene" style="height: 50px; -unity-font-style: bold; -unity-text-align: middle-center;" />
+        <ui:TextField placeholder-text="filler text" name="TXF_CustomSceneName" style="flex-grow: 1; height: 50px; width: 361px;" />
+    </ui:VisualElement>
+</ui:UXML>

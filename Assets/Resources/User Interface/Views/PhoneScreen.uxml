@@ -1,0 +1,92 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Resources/User%20Interface/Styles/AppTile.uss?fileID=7433441132597879392&amp;guid=4bdd60fe62997374cbe83e6449ab5b97&amp;type=3#AppTile" />
+    <ui:VisualElement name="StatusBar" style="flex-grow: 0; background-color: rgb(102, 164, 0); -unity-background-image-tint-color: rgb(0, 0, 0); background-image: url(&quot;project://database/Assets/Third%20Party/Synty/PolygonHorrorMansion/Textures/Misc/White.png?fileID=2800000&amp;guid=564c508749358e2429df24162e913c43&amp;type=3#White&quot;);">
+        <ui:VisualElement style="flex-grow: 1; height: 50px; background-image: url(&quot;project://database/Assets/Third%20Party/Synty/PolygonHorrorMansion/Textures/Misc/White.png?fileID=2800000&amp;guid=564c508749358e2429df24162e913c43&amp;type=3#White&quot;); background-color: rgb(255, 255, 255); -unity-background-image-tint-color: rgb(17, 17, 17); flex-direction: row;">
+            <ui:Label text="12:00 AM" style="margin-top: 2px; margin-right: 2px; margin-bottom: 2px; margin-left: 2px; color: rgb(255, 255, 255); -unity-text-align: lower-center; -unity-font-style: bold; font-size: 18px;" />
+            <ui:VisualElement style="flex-grow: 1; width: 91%;" />
+            <ui:VisualElement name="PhoneBatteryIcon" style="flex-grow: 0; flex-basis: auto; flex-shrink: 0; align-items: auto; align-content: flex-start; align-self: stretch; justify-content: space-between; width: 50px;">
+                <ui:VisualElement name="Fill" style="flex-grow: 1; -unity-background-image-tint-color: rgb(0, 0, 0); background-color: rgb(0, 0, 0); position: absolute; height: 28px; width: 12px; top: 13px; left: 19px; bottom: auto; right: auto; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 12px; flex-direction: row-reverse;">
+                    <ui:VisualElement name="PhoneBatteryBar" style="flex-grow: 1; position: absolute; height: 98%; width: 100%; bottom: 0.5px; left: 0; right: 0; background-color: rgb(91, 255, 0); -unity-background-image-tint-color: rgb(255, 255, 255);" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Foreground" style="flex-grow: 1; background-image: resource(&apos;Sprites/Battery&apos;); width: 50px; rotate: 0; transform-origin: center; height: 50px; position: absolute; top: 0; -unity-background-image-tint-color: rgb(255, 255, 255);" />
+                <ui:VisualElement name="ChargeIcon" style="flex-grow: 1; background-image: none; width: 12px; rotate: 0; transform-origin: center; height: 15px; position: absolute; top: 25px; -unity-background-image-tint-color: rgb(255, 255, 255); padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; left: 19px;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement name="ContentView" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Third%20Party/Synty/PolygonHorrorMansion/Textures/Misc/White.png?fileID=2800000&amp;guid=564c508749358e2429df24162e913c43&amp;type=3#White&quot;);">
+        <ui:VisualElement name="VisualElement" style="flex-grow: 1;">
+            <ui:VisualElement name="Row_0" style="flex-grow: 1; flex-direction: row; height: 50px;">
+                <ui:VisualElement name="VisualElement" style="flex-grow: 1;">
+                    <ui:VisualElement name="VisualElement" class="tile" style="flex-grow: 1; border-top-width: 3px; border-right-width: 3px; border-bottom-width: 3px; border-left-width: 3px; border-top-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px; border-bottom-left-radius: 15px; -unity-background-image-tint-color: rgb(255, 255, 255); margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px; background-image: resource(&apos;Sprites/Phone_App_Icon&apos;);" />
+                </ui:VisualElement>
+                <ui:VisualElement name="VisualElement" style="flex-grow: 1;">
+                    <ui:VisualElement name="VisualElement" class="tile" style="flex-grow: 1; border-top-width: 3px; border-right-width: 3px; border-bottom-width: 3px; border-left-width: 3px; border-top-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px; border-bottom-left-radius: 15px; -unity-background-image-tint-color: rgb(255, 255, 255); margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="VisualElement" style="flex-grow: 1;">
+                    <ui:VisualElement name="VisualElement" class="tile" style="flex-grow: 1; border-top-width: 3px; border-right-width: 3px; border-bottom-width: 3px; border-left-width: 3px; border-top-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px; border-bottom-left-radius: 15px; -unity-background-image-tint-color: rgb(255, 255, 255); margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="VisualElement" style="flex-grow: 1;">
+                    <ui:VisualElement name="VisualElement" class="tile" style="flex-grow: 1; border-top-width: 3px; border-right-width: 3px; border-bottom-width: 3px; border-left-width: 3px; border-top-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px; border-bottom-left-radius: 15px; -unity-background-image-tint-color: rgb(255, 255, 255); margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="Row_0" style="flex-grow: 1; flex-direction: row; height: 50px;">
+                <ui:VisualElement name="VisualElement" style="flex-grow: 1;">
+                    <ui:VisualElement name="VisualElement" class="tile" style="flex-grow: 1; border-top-width: 3px; border-right-width: 3px; border-bottom-width: 3px; border-left-width: 3px; border-top-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px; border-bottom-left-radius: 15px; -unity-background-image-tint-color: rgb(255, 255, 255); margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="VisualElement" style="flex-grow: 1;">
+                    <ui:VisualElement name="VisualElement" class="tile" style="flex-grow: 1; border-top-width: 3px; border-right-width: 3px; border-bottom-width: 3px; border-left-width: 3px; border-top-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px; border-bottom-left-radius: 15px; -unity-background-image-tint-color: rgb(255, 255, 255); margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="VisualElement" style="flex-grow: 1;">
+                    <ui:VisualElement name="VisualElement" class="tile" style="flex-grow: 1; border-top-width: 3px; border-right-width: 3px; border-bottom-width: 3px; border-left-width: 3px; border-top-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px; border-bottom-left-radius: 15px; -unity-background-image-tint-color: rgb(255, 255, 255); margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="VisualElement" style="flex-grow: 1;">
+                    <ui:VisualElement name="VisualElement" class="tile" style="flex-grow: 1; border-top-width: 3px; border-right-width: 3px; border-bottom-width: 3px; border-left-width: 3px; border-top-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px; border-bottom-left-radius: 15px; -unity-background-image-tint-color: rgb(255, 255, 255); margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="Row_0" style="flex-grow: 1; flex-direction: row; height: 50px;">
+                <ui:VisualElement name="VisualElement" style="flex-grow: 1;">
+                    <ui:VisualElement name="VisualElement" class="tile" style="flex-grow: 1; border-top-width: 3px; border-right-width: 3px; border-bottom-width: 3px; border-left-width: 3px; border-top-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px; border-bottom-left-radius: 15px; -unity-background-image-tint-color: rgb(255, 255, 255); margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="VisualElement" style="flex-grow: 1;">
+                    <ui:VisualElement name="VisualElement" class="tile" style="flex-grow: 1; border-top-width: 3px; border-right-width: 3px; border-bottom-width: 3px; border-left-width: 3px; border-top-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px; border-bottom-left-radius: 15px; -unity-background-image-tint-color: rgb(255, 255, 255); margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="VisualElement" style="flex-grow: 1;">
+                    <ui:VisualElement name="VisualElement" class="tile" style="flex-grow: 1; border-top-width: 3px; border-right-width: 3px; border-bottom-width: 3px; border-left-width: 3px; border-top-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px; border-bottom-left-radius: 15px; -unity-background-image-tint-color: rgb(255, 255, 255); margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="VisualElement" style="flex-grow: 1;">
+                    <ui:VisualElement name="VisualElement" class="tile" style="flex-grow: 1; border-top-width: 3px; border-right-width: 3px; border-bottom-width: 3px; border-left-width: 3px; border-top-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px; border-bottom-left-radius: 15px; -unity-background-image-tint-color: rgb(255, 255, 255); margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="Row_0" style="flex-grow: 1; flex-direction: row; height: 50px;">
+                <ui:VisualElement name="VisualElement" style="flex-grow: 1;">
+                    <ui:VisualElement name="VisualElement" class="tile" style="flex-grow: 1; border-top-width: 3px; border-right-width: 3px; border-bottom-width: 3px; border-left-width: 3px; border-top-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px; border-bottom-left-radius: 15px; -unity-background-image-tint-color: rgb(255, 255, 255); margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="VisualElement" style="flex-grow: 1;">
+                    <ui:VisualElement name="VisualElement" class="tile" style="flex-grow: 1; border-top-width: 3px; border-right-width: 3px; border-bottom-width: 3px; border-left-width: 3px; border-top-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px; border-bottom-left-radius: 15px; -unity-background-image-tint-color: rgb(255, 255, 255); margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="VisualElement" style="flex-grow: 1;">
+                    <ui:VisualElement name="VisualElement" class="tile" style="flex-grow: 1; border-top-width: 3px; border-right-width: 3px; border-bottom-width: 3px; border-left-width: 3px; border-top-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px; border-bottom-left-radius: 15px; -unity-background-image-tint-color: rgb(255, 255, 255); margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="VisualElement" style="flex-grow: 1;">
+                    <ui:VisualElement name="VisualElement" class="tile" style="flex-grow: 1; border-top-width: 3px; border-right-width: 3px; border-bottom-width: 3px; border-left-width: 3px; border-top-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px; border-bottom-left-radius: 15px; -unity-background-image-tint-color: rgb(255, 255, 255); margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="Row_0" style="flex-grow: 1; flex-direction: row; height: 50px;">
+                <ui:VisualElement name="VisualElement" style="flex-grow: 1;">
+                    <ui:VisualElement name="VisualElement" class="tile" style="flex-grow: 1; border-top-width: 3px; border-right-width: 3px; border-bottom-width: 3px; border-left-width: 3px; border-top-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px; border-bottom-left-radius: 15px; -unity-background-image-tint-color: rgb(255, 255, 255); margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="VisualElement" style="flex-grow: 1;">
+                    <ui:VisualElement name="VisualElement" class="tile" style="flex-grow: 1; border-top-width: 3px; border-right-width: 3px; border-bottom-width: 3px; border-left-width: 3px; border-top-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px; border-bottom-left-radius: 15px; -unity-background-image-tint-color: rgb(255, 255, 255); margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="VisualElement" style="flex-grow: 1;">
+                    <ui:VisualElement name="VisualElement" class="tile" style="flex-grow: 1; border-top-width: 3px; border-right-width: 3px; border-bottom-width: 3px; border-left-width: 3px; border-top-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px; border-bottom-left-radius: 15px; -unity-background-image-tint-color: rgb(255, 255, 255); margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="VisualElement" style="flex-grow: 1;">
+                    <ui:VisualElement name="VisualElement" class="tile" style="flex-grow: 1; border-top-width: 3px; border-right-width: 3px; border-bottom-width: 3px; border-left-width: 3px; border-top-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px; border-bottom-left-radius: 15px; -unity-background-image-tint-color: rgb(255, 255, 255); margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="Row_0" style="flex-grow: 1; flex-direction: row; height: 50px;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement name="GestureControls" style="flex-grow: 0; height: 10px; background-image: url(&quot;project://database/Assets/Third%20Party/Synty/PolygonHorrorMansion/Textures/Misc/White.png?fileID=2800000&amp;guid=564c508749358e2429df24162e913c43&amp;type=3#White&quot;);" />
+</ui:UXML>
