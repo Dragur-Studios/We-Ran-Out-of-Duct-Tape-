@@ -61,6 +61,15 @@ public class GameManager : MonoBehaviour
 
     }
 
+    internal void SpawnPlayer(Transform spawnTransform)
+    {
+        var go = Instantiate(Player_prefab);
+        go.transform.position = spawnTransform.position;
+        go.transform.rotation = spawnTransform.rotation;
+
+        player = go.GetComponent<Player>();
+        player.Initilize();
+    }
     internal void SpawnPlayer()
     {
         var go = Instantiate(Player_prefab);
@@ -70,8 +79,11 @@ public class GameManager : MonoBehaviour
         player = go.GetComponent<Player>();
         player.Initilize();
 
-        
+
     }
+
+
+
 
     internal void PrepareGameCamera()
     {
