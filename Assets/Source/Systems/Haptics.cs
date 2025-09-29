@@ -32,7 +32,6 @@ public class Haptics : MonoBehaviour
 
         if (Gamepad.current != null)
         {
-            Debug.Log("Forcing rumble test...");
             Gamepad.current.SetMotorSpeeds(0.5f, 1.0f);
             Invoke(nameof(StopRumble), 1.0f);
         }

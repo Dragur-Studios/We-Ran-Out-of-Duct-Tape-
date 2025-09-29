@@ -17,10 +17,8 @@ public class Weapon : MonoBehaviour
     [SerializeField] WeaponData data;
     public float FireRate { get => data.FireRate; }
 
-    private void Start()
-    {
+    float y = 0;
 
-    }
 
     void SpawnMuzzleFlash(Transform t)
     {
@@ -34,7 +32,10 @@ public class Weapon : MonoBehaviour
 
     public void Fire()
     {
+        // HANDLE SPAWING OF BULLET.
+        SpawnBullet(muzzleOrigin);
 
+     
         Gamepad pad = Gamepad.all.Count > 0 ? Gamepad.all[0] : null;
 
         var pkt = new FeedbackPacket()
@@ -53,15 +54,21 @@ public class Weapon : MonoBehaviour
 
         // HANDLE SPAWNING OF PARTICLE EFFECT.
         SpawnMuzzleFlash(muzzleOrigin);
-        // HANDLE SPAWING OF BULLET.
-        SpawnBullet(muzzleOrigin);
-
+       
     }
 
     private void SpawnBullet(Transform muzzleOrigin)
     {
+        // SAVE Y before rotation happens...
+        y = muzzleOrigin.position.y;
+
         var go = Instantiate(bulletPrefab);
-        go.transform.position = muzzleOrigin.position;
+        var pos = muzzleOrigin.position;
+        pos.y = y;
+        go.transform.position = pos;
+
         go.transform.rotation = muzzleOrigin.rotation;
+
+        Destroy(go, 2);
     }
 }

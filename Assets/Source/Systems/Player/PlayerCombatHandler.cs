@@ -22,10 +22,8 @@ public class PlayerCombatHandler : MonoBehaviour
     {
         if (inputs.Fire)
         {
-            if (rigs.TryFire())
-            {
-                equippedWeapon.Fire();
-            }
+            rigs.TryFire(equippedWeapon.Fire);
+            
         }
     }
 

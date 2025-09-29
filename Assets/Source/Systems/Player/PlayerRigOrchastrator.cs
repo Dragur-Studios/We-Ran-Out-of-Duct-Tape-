@@ -143,13 +143,16 @@ public class PlayerRigOrchastrator : MonoBehaviour
 
     Coroutine fireAnim;
 
-    public bool TryFire()
+    public bool TryFire(Action cb)
     {
         if (canFire == false)
             return false;
         
         if (!inputs.Focus) 
             return false;
+
+
+        cb?.Invoke();
 
         fireDelayTimer = 60 / equippedWeapon.FireRate;
         canFire = false;

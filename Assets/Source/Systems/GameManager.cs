@@ -70,16 +70,17 @@ public class GameManager : MonoBehaviour
         go.transform.rotation = spawnTransform.rotation;
 
         var enemy = go.GetComponent<EnemyBehaviorResolver>();
-        enemy.SetTarget(player.transform);
     }
-    public void SpawnEnemy(Vector3 spawnPos, Quaternion spawnRot)
+    public GameObject SpawnEnemy(Vector3 spawnPos, Quaternion spawnRot)
     {
         var go = Instantiate(Enemy_prefab);
         go.transform.position = spawnPos;
         go.transform.rotation = spawnRot;
 
         var enemy = go.GetComponent<EnemyBehaviorResolver>();
-        enemy.SetTarget(player.transform);
+        
+        
+        return go;
 
     }
     internal void SpawnPlayer(Transform spawnTransform)
