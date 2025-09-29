@@ -1,225 +1,187 @@
-﻿//#if UNITY_2021_2_OR_NEWER
-//using System.Reflection;
-//using UnityEditor;
-//using UnityEditor.Overlays;
-//using UnityEditor.SceneManagement;
-//using UnityEditor.UIElements;
-//using UnityEngine;
-//using UnityEngine.UIElements;
-
-//[Overlay(typeof(SceneView), "Play Mode Override")]
-//public class PlayFromSceneOverlay : Overlay
-//{
-//    private SceneAsset sceneToPlay;
-//    private static string cachedScenePath;
-//    private static SceneAsset playModeOverrideScene;
-
-//    public override VisualElement CreatePanelContent()
-//    {
-//        var root = new VisualElement { style = { flexDirection = FlexDirection.Row } };
-
-//        // Auto‑assign "Main Menu" if found
-//        if (sceneToPlay == null)
-//        {
-//            string[] guids = AssetDatabase.FindAssets("t:Scene Main Menu");
-//            if (guids.Length > 0)
-//            {
-//                string path = AssetDatabase.GUIDToAssetPath(guids[0]);
-//                sceneToPlay = AssetDatabase.LoadAssetAtPath<SceneAsset>(path);
-//            }
-//        }
-
-//        var objectField = new ObjectField("Start Scene")
-//        {
-//            objectType = typeof(SceneAsset),
-//            allowSceneObjects = false,
-//            style = { flexGrow = 1 },
-//            value = sceneToPlay
-//        };
-//        objectField.RegisterValueChangedCallback(evt => sceneToPlay = (SceneAsset)evt.newValue);
-
-//        // --- Play Button ---
-//        var playButton = new ToolbarToggle
-//        {
-//            style = { width = 24, height = 24 }
-//        };
-//        playButton.AddToClassList("unity-toolbar-button");
-//        playButton.text = EditorApplication.isPlaying ? "■" : "▶";
-//        playButton.value = EditorApplication.isPlaying;
-
-//        playButton.RegisterValueChangedCallback(evt =>
-//        {
-//            if (evt.newValue)
-//                CacheAndPlay();
-//            else
-//                EditorApplication.isPlaying = false;
-//        });
-
-//        EditorApplication.playModeStateChanged += _ =>
-//        {
-//            playButton.text = EditorApplication.isPlaying ? "■" : "▶";
-//            playButton.SetValueWithoutNotify(EditorApplication.isPlaying);
-//        };
-
-//        // --- Play Mode Behavior Button (Maximize toggle) ---
-//        Texture2D fullscreenTex = Resources.Load<Texture2D>("Expand");
-//        var fullscreenButton = new ToolbarToggle
-//        {
-//            style = { width = 24, height = 24 }
-//        };
-//        fullscreenButton.AddToClassList("unity-toolbar-button");
-//        if (fullscreenTex != null)
-//            fullscreenButton.style.backgroundImage = new StyleBackground(fullscreenTex);
-
-//        // Sync with current setting
-//        fullscreenButton.value = GetPlayModeBehavior() == 1;
-
-//        fullscreenButton.RegisterValueChangedCallback(evt =>
-//        {
-//            SetPlayModeBehavior(evt.newValue ? 1 : 0);
-//        });
-
-//        root.Add(objectField);
-//        root.Add(playButton);
-//        root.Add(fullscreenButton);
-//        return root;
-//    }
-
-//    private void SetPlayModeBehavior(int mode)
-//    {
-//        var gameViewType = typeof(Editor).Assembly.GetType("UnityEditor.GameView");
-//        var prop = gameViewType.GetProperty("playModeBehavior",
-//            BindingFlags.NonPublic | BindingFlags.Static);
-//        if (prop != null)
-//            prop.SetValue(null, mode, null);
-
-//        // Also persist to EditorPrefs so Unity remembers across sessions
-//        EditorPrefs.SetInt("PlayModeBehavior", mode);
-//    }
-
-//    private int GetPlayModeBehavior()
-//    {
-//        return EditorPrefs.GetInt("PlayModeBehavior", 0);
-//    }
-
-//    private void CacheAndPlay()
-//    {
-//        if (sceneToPlay == null) return;
-
-//        var currentScene = EditorSceneManager.GetActiveScene();
-//        if (currentScene.isDirty)
-//        {
-//            if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
-//                return;
-//        }
-//        cachedScenePath = currentScene.path;
-
-//        playModeOverrideScene = sceneToPlay;
-//        EditorSceneManager.playModeStartScene = playModeOverrideScene;
-
-//        EditorApplication.isPlaying = true;
-//        EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
-//    }
-
-//    private void OnPlayModeStateChanged(PlayModeStateChange state)
-//    {
-//        if (state == PlayModeStateChange.EnteredEditMode)
-//        {
-//            EditorSceneManager.playModeStartScene = null;
-
-//            if (!string.IsNullOrEmpty(cachedScenePath))
-//            {
-//                EditorSceneManager.OpenScene(cachedScenePath);
-//                cachedScenePath = null;
-//            }
-
-//            EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
-//        }
-
-//        if(state == PlayModeStateChange.EnteredPlayMode)
-//        {
-
-//            var gameViewType = typeof(Editor).Assembly.GetType("UnityEditor.GameView");
-//            var wnd = EditorWindow.GetWindow(gameViewType);
-//            int m = EditorPrefs.GetInt("PlayModeBehavior");
-//            wnd.maximized = (m == 1) ? true : false;
-//        }
-//    }
-//}
-//#endif
-#if UNITY_2021_2_OR_NEWER
-using System.Reflection;
+﻿#if UNITY_2021_2_OR_NEWER
+using System.Linq;
 using UnityEditor;
 using UnityEditor.Overlays;
 using UnityEditor.SceneManagement;
 using UnityEditor.UIElements;
+using UnityEngine;
 using UnityEngine.UIElements;
 
-
-// This class never gets shown, it's just a proxy marker
-
-[Overlay(typeof(SceneView), "Start Override")]
-public class PlayFromSceneOverlay : Overlay
+[Overlay(typeof(SceneView), "Play From Scene (List)")]
+public class PlayFromSceneListOverlay : Overlay
 {
-    private SceneAsset sceneToPlay;
     private static string cachedScenePath;
     private static SceneAsset playModeOverrideScene;
 
+    private ListView sceneListView;
+    private SceneAsset[] allScenes;
+
+    private const string PrefKey = "PlayFromSceneListOverlay.SelectedScenePath";
+
     public override VisualElement CreatePanelContent()
     {
-        var root = new VisualElement { style = { flexDirection = FlexDirection.Row } };
+        var root = new VisualElement { style = { flexDirection = FlexDirection.Column } };
 
-        // Auto‑assign "Main Menu" if found
-        if (sceneToPlay == null)
+        // --- Controls row at top, centered ---
+        var controls = new VisualElement
         {
-            string[] guids = AssetDatabase.FindAssets("t:Scene Main Menu");
-            if (guids.Length > 0)
+            style =
             {
-                string path = AssetDatabase.GUIDToAssetPath(guids[0]);
-                sceneToPlay = AssetDatabase.LoadAssetAtPath<SceneAsset>(path);
+                flexDirection = FlexDirection.Row,
+                justifyContent = Justify.Center,
+                marginBottom = 4
             }
-        }
-
-        var objectField = new ObjectField("")
-        {
-            objectType = typeof(SceneAsset),
-            allowSceneObjects = false,
-            style = { flexGrow = 1 },
-            value = sceneToPlay
         };
-        objectField.RegisterValueChangedCallback(evt => sceneToPlay = (SceneAsset)evt.newValue);
 
-        // --- Play Button ---
-        var playButton = new ToolbarToggle { style = { width = 24, height = 24 } };
+        var playButton = new ToolbarToggle { text = EditorApplication.isPlaying ? "■" : "▶" };
         playButton.AddToClassList("unity-toolbar-button");
-        playButton.text = EditorApplication.isPlaying ? "■" : "▶";
-        playButton.value = EditorApplication.isPlaying;
-
         playButton.RegisterValueChangedCallback(evt =>
         {
-            if (evt.newValue)
-                CacheAndPlay();
-            else
-                EditorApplication.isPlaying = false;
+            if (evt.newValue) CacheAndPlay();
+            else EditorApplication.isPlaying = false;
         });
+
+        var pauseButton = new ToolbarToggle { text = "⏸" };
+        pauseButton.AddToClassList("unity-toolbar-button");
+        pauseButton.RegisterValueChangedCallback(evt => EditorApplication.isPaused = evt.newValue);
+
+        var stepButton = new ToolbarButton(() => EditorApplication.Step()) { text = "⏭" };
+        stepButton.AddToClassList("unity-toolbar-button");
 
         EditorApplication.playModeStateChanged += _ =>
         {
             playButton.text = EditorApplication.isPlaying ? "■" : "▶";
             playButton.SetValueWithoutNotify(EditorApplication.isPlaying);
+            pauseButton.SetValueWithoutNotify(EditorApplication.isPaused);
         };
 
+        controls.Add(playButton);
+        controls.Add(pauseButton);
+        controls.Add(stepButton);
+        root.Add(controls);
 
+        // --- Gather all scenes (only Assets/Scenes) ---
+        string[] guids = AssetDatabase.FindAssets("t:Scene", new[] { "Assets/Scenes" });
+        allScenes = guids
+            .Select(g => AssetDatabase.LoadAssetAtPath<SceneAsset>(AssetDatabase.GUIDToAssetPath(g)))
+            .Where(s => s != null)
+            .OrderBy(s => s.name)
+            .ToArray();
 
-        root.Add(objectField);
-        root.Add(playButton);
+        if (allScenes.Length == 0)
+        {
+            root.Add(new Label("No scenes found in Assets/Scenes"));
+            return root;
+        }
+
+        // Restore last selection from prefs
+        var savedPath = EditorPrefs.GetString(PrefKey, "");
+        if (!string.IsNullOrEmpty(savedPath))
+        {
+            playModeOverrideScene = AssetDatabase.LoadAssetAtPath<SceneAsset>(savedPath);
+        }
+
+        // --- Scene List with Toggle + ObjectField ---
+        sceneListView = new ListView
+        {
+            itemsSource = allScenes,
+            fixedItemHeight = 22,
+            selectionType = SelectionType.None,
+            style = { flexGrow = 1 }
+        };
+
+        sceneListView.makeItem = () =>
+        {
+            var row = new VisualElement { style = { flexDirection = FlexDirection.Row } };
+
+            var toggle = new Toggle { style = { width = 18, marginRight = 4 } };
+            var field = new ObjectField
+            {
+                objectType = typeof(SceneAsset),
+                allowSceneObjects = false,
+                style = { flexGrow = 1 }
+            };
+
+            row.Add(toggle);
+            row.Add(field);
+            return row;
+        };
+
+        sceneListView.bindItem = (element, i) =>
+        {
+            var row = (VisualElement)element;
+            var toggle = row.Q<Toggle>();
+            var field = row.Q<ObjectField>();
+
+            var scene = allScenes[i];
+            field.value = scene;
+
+            // Enable/disable ObjectField based on toggle
+            toggle.value = (playModeOverrideScene == scene);
+            field.SetEnabled(toggle.value);
+
+            toggle.RegisterValueChangedCallback(evt =>
+            {
+                field.SetEnabled(evt.newValue);
+                if (evt.newValue)
+                {
+                    playModeOverrideScene = scene;
+                    EditorPrefs.SetString(PrefKey, AssetDatabase.GetAssetPath(scene));
+
+                    // Uncheck all other toggles
+                    for (int j = 0; j < sceneListView.itemsSource.Count; j++)
+                    {
+                        if (j == i) continue;
+                        var otherRow = sceneListView.GetRootElementForIndex(j);
+                        if (otherRow != null)
+                        {
+                            var otherToggle = otherRow.Q<Toggle>();
+                            if (otherToggle != null)
+                                otherToggle.SetValueWithoutNotify(false);
+                            var otherField = otherRow.Q<ObjectField>();
+                            if (otherField != null)
+                                otherField.SetEnabled(false);
+                        }
+                    }
+                }
+                else if (playModeOverrideScene == scene)
+                {
+                    playModeOverrideScene = null;
+                    EditorPrefs.DeleteKey(PrefKey);
+                }
+            });
+
+            // Double‑click to open scene
+            field.RegisterCallback<MouseDownEvent>(evt =>
+            {
+                if (evt.clickCount == 2 && toggle.value && scene != null)
+                {
+                    if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
+                    {
+                        EditorSceneManager.OpenScene(AssetDatabase.GetAssetPath(scene));
+                    }
+                }
+            });
+
+            // Assigning a new scene via ObjectField
+            field.RegisterValueChangedCallback(evt =>
+            {
+                if (toggle.value)
+                {
+                    playModeOverrideScene = (SceneAsset)evt.newValue;
+                    if (playModeOverrideScene != null)
+                        EditorPrefs.SetString(PrefKey, AssetDatabase.GetAssetPath(playModeOverrideScene));
+                }
+            });
+        };
+
+        root.Add(sceneListView);
         return root;
     }
 
-
     private void CacheAndPlay()
     {
-        if (sceneToPlay == null) return;
+        if (playModeOverrideScene == null) return;
 
         var currentScene = EditorSceneManager.GetActiveScene();
         if (currentScene.isDirty)
@@ -229,9 +191,7 @@ public class PlayFromSceneOverlay : Overlay
         }
         cachedScenePath = currentScene.path;
 
-        playModeOverrideScene = sceneToPlay;
         EditorSceneManager.playModeStartScene = playModeOverrideScene;
-
         EditorApplication.isPlaying = true;
         EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
     }
@@ -253,4 +213,3 @@ public class PlayFromSceneOverlay : Overlay
     }
 }
 #endif
-

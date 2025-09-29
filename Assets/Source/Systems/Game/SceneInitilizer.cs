@@ -7,9 +7,10 @@ public class SceneInitilizer : MonoBehaviour
 
     void Start()
     {
-        var gm = GameManager.Singleton;
+        var gm = GameManager.Instance;
         gm.LoadGame();
-        if(transform == null)
+
+        if(spawnTransform == null)
         {
             gm.SpawnPlayer();
         }
@@ -17,6 +18,7 @@ public class SceneInitilizer : MonoBehaviour
         {
             gm.SpawnPlayer(spawnTransform);
         }
+        
         gm.PrepareGameCamera();
     }
 

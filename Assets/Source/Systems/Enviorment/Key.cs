@@ -9,7 +9,7 @@ public class Key : IItem
 
         OnInteract += () =>
         {
-            GameManager.Singleton.Player.PickUp(this);
+            GameManager.Instance.Player.PickUp(this);
         };
     }
 

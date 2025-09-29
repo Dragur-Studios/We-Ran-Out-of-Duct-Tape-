@@ -136,6 +136,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4214022919379965020, guid: c1efe8d9ca11fb44089b4687d2cf499b, type: 3}
+      propertyPath: Enemy_prefab
+      value: 
+      objectReference: {fileID: 95591468498797003, guid: 19b23609e1780c04dbf3278ca49d6809, type: 3}
+    - target: {fileID: 4214022919379965020, guid: c1efe8d9ca11fb44089b4687d2cf499b, type: 3}
       propertyPath: playground_scene_auto
       value: 1
       objectReference: {fileID: 0}
@@ -386,8 +390,28 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7796040343309677072, guid: 125fa3b889f6c1d4cb71c8004cfa9a2d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1524361860}
   m_SourcePrefab: {fileID: 100100000, guid: 125fa3b889f6c1d4cb71c8004cfa9a2d, type: 3}
+--- !u!1 &1524361859 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7796040343309677072, guid: 125fa3b889f6c1d4cb71c8004cfa9a2d, type: 3}
+  m_PrefabInstance: {fileID: 1524361858}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1524361860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1524361859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80bb135cde0921c41af632237a0e1c58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Haptics
 --- !u!1 &2009291440
 GameObject:
   m_ObjectHideFlags: 0

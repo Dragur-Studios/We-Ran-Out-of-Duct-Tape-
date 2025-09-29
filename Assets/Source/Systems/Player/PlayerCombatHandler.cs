@@ -10,15 +10,17 @@ public class PlayerCombatHandler : MonoBehaviour
     public Weapon equippedWeapon;
 
     PlayerRigOrchastrator rigs;
+    PlayerInputReciever inputs;
 
     private void Start()
     {
         rigs = GetComponentInChildren<PlayerRigOrchastrator>();
+        inputs = GetComponent<PlayerInputReciever>();
     }
 
     private void Update()
     {
-        if (Mouse.current.leftButton.isPressed)
+        if (inputs.Fire)
         {
             if (rigs.TryFire())
             {

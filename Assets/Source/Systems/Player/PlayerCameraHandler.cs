@@ -65,7 +65,8 @@ public class PlayerCameraHandler : MonoBehaviour
 
         // --- 2. Apply sensitivity & accumulate rotation ---
         // we can only rotate.. when NOT aiming down sight.
-        yaw += lookInput.x * sensitivityX * Time.deltaTime;
+        if(!inputs.Focus)
+            yaw += lookInput.x * sensitivityX * Time.deltaTime;
         //pitch -= lookInput.y * sensitivityY * Time.deltaTime;
         //pitch = Mathf.Clamp(pitch, minPitch, maxPitch);  
 

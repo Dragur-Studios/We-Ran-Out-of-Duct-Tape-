@@ -190,9 +190,10 @@ MonoBehaviour:
     ThumbSocket: {fileID: 6517593543999952663}
     IndexSocket: {fileID: 3676104288609196935}
     OuterSocket: {fileID: 1579879311685104004}
-  FireRate: 240
   vfx_MuzzleFlash: {fileID: 2496098481322500370, guid: 05e438515c4edeb4299f457a6bd39787, type: 3}
   muzzleOrigin: {fileID: 1751747895268931421}
+  bulletPrefab: {fileID: 5560430682986822835, guid: 19367b7cd22f8cf40b237f57439b6249, type: 3}
+  data: {fileID: 11400000, guid: 1b872dad0b1d75e4ab648a0af68c16b6, type: 2}
 --- !u!1 &7436959741874550965
 GameObject:
   m_ObjectHideFlags: 0

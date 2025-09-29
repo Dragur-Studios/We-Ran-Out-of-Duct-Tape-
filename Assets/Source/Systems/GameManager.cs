@@ -4,9 +4,10 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
 
-    public static GameManager Singleton;
+    public static GameManager Instance;
 
     public GameObject Player_prefab;
+    public GameObject Enemy_prefab;
 
     [SerializeField] bool lock_cursor = false;
     
@@ -18,14 +19,14 @@ public class GameManager : MonoBehaviour
     {
         Screen.SetResolution(1920, 1080, FullScreenMode.FullScreenWindow, new RefreshRate { numerator = 144, denominator = 1 });
 
-        if (Singleton != null && Singleton != this)
+        if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
             return;
         }
 
         DontDestroyOnLoad(gameObject);
-        Singleton = this;
+        Instance = this;
 
     }
 
@@ -61,6 +62,26 @@ public class GameManager : MonoBehaviour
 
     }
 
+
+    public void SpawnEnemy(Transform spawnTransform)
+    {
+        var go = Instantiate(Enemy_prefab);
+        go.transform.position = spawnTransform.position;
+        go.transform.rotation = spawnTransform.rotation;
+
+        var enemy = go.GetComponent<EnemyBehaviorResolver>();
+        enemy.SetTarget(player.transform);
+    }
+    public void SpawnEnemy(Vector3 spawnPos, Quaternion spawnRot)
+    {
+        var go = Instantiate(Enemy_prefab);
+        go.transform.position = spawnPos;
+        go.transform.rotation = spawnRot;
+
+        var enemy = go.GetComponent<EnemyBehaviorResolver>();
+        enemy.SetTarget(player.transform);
+
+    }
     internal void SpawnPlayer(Transform spawnTransform)
     {
         var go = Instantiate(Player_prefab);

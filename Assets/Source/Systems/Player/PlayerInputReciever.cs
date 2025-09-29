@@ -11,6 +11,7 @@ public class PlayerInputReciever : MonoBehaviour
     bool _focus;
     bool _sprint;
     bool _interact;
+    bool _fire;
 
     public Vector2 MoveInput { get => _moveInput; }
     public Vector2 LookInput { get => _lookInput; }
@@ -18,6 +19,7 @@ public class PlayerInputReciever : MonoBehaviour
     public bool Crouch { get => _crouch; }
     public bool Focus { get => _focus; }
     public bool Sprint { get => _sprint; }
+    public bool Fire { get => _fire; }
 
     public bool Interact { get => _interact; }
     private void OnEnable()
@@ -38,6 +40,7 @@ public class PlayerInputReciever : MonoBehaviour
         _focus = controls.Player.Focus.ReadValue<float>() > 0.5f;
         _sprint = controls.Player.Sprint.ReadValue<float>() > 0.5f;
         _interact = controls.Player.Interact.ReadValue<float>() > 0.5f;
+        _fire = controls.Player.Fire.ReadValue<float>() > 0.5f;
 
     }
 
