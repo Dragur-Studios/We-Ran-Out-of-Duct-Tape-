@@ -1,0 +1,13 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Resources/User%20Interface/Styles/MainMenuStyle.uss?fileID=7433441132597879392&amp;guid=877c637a2f1946245bc686d8456f3803&amp;type=3#MainMenuStyle" />
+    <ui:VisualElement style="flex-grow: 1;">
+        <ui:VisualElement style="flex-grow: 1;" />
+        <ui:VisualElement style="flex-grow: 1;">
+            <ui:Label text="YOU DIED" style="font-size: 162px; color: rgb(240, 0, 0); -unity-text-align: middle-center; text-shadow: 15px 15px 12px rgba(0, 0, 0, 0.3);" />
+        </ui:VisualElement>
+        <ui:VisualElement style="flex-grow: 1; flex-direction: row; flex-shrink: 0; -unity-text-align: middle-center;">
+            <ui:Button text="RESPAWN AT CAMP" name="RespawnAtCampButton" class="game-over-button" style="white-space: nowrap; text-overflow: ellipsis; -unity-text-align: middle-center; flex-direction: column-reverse; flex-grow: 2; flex-shrink: 2; margin-left: auto; margin-right: auto;" />
+        </ui:VisualElement>
+        <ui:VisualElement style="flex-grow: 1;" />
+    </ui:VisualElement>
+</ui:UXML>

@@ -22,6 +22,8 @@ public class EnemyAnimationResolver : MonoBehaviour
 
         idle = Random.Range(1, 4);
         anim.SetInteger("Idle", idle);
+
+        CloseDamageCollider();
     }
   
     void Update()
@@ -46,5 +48,15 @@ public class EnemyAnimationResolver : MonoBehaviour
 
         anim.SetFloat("Velocity", velocityFactor);
 
+    }
+    [SerializeField] GameObject damageCollider;
+    public void OpenDamageCollider()
+    {
+        damageCollider.SetActive(true);
+    }
+
+    public void CloseDamageCollider()
+    {
+        damageCollider.SetActive(false);
     }
 }

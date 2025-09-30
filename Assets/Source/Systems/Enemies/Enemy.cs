@@ -37,4 +37,11 @@ public class Enemy : MonoBehaviour
     {
         HP -= value;
     }
+
+    [SerializeField] int DamagePotential = 40;
+
+    internal int GetDamage()
+    {
+        return DamagePotential;
+    }
 }

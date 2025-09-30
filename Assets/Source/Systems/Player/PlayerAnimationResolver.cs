@@ -67,6 +67,7 @@ public class PlayerAnimationResolver : MonoBehaviour
         Haptics.ApplyFeedback(pkt);
     }
 
+
     private void OnAnimatorMove()
     {
         

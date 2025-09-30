@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Unity.Collections;
 using Unity.VisualScripting;
@@ -12,6 +13,14 @@ public class PlayerCombatHandler : MonoBehaviour
     PlayerRigOrchastrator rigs;
     PlayerInputReciever inputs;
 
+
+    bool isLock = false;
+
+    internal void Lock()
+    {
+        isLock = true;
+    }
+
     private void Start()
     {
         rigs = GetComponentInChildren<PlayerRigOrchastrator>();
@@ -20,6 +29,8 @@ public class PlayerCombatHandler : MonoBehaviour
 
     private void Update()
     {
+        if (isLock) return;
+
         if (inputs.Fire)
         {
             rigs.TryFire(equippedWeapon.Fire);

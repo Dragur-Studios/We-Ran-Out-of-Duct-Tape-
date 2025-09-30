@@ -2701,6 +2701,7 @@ GameObject:
   - component: {fileID: 892588233806068253}
   - component: {fileID: 1721721459146970558}
   - component: {fileID: 2407094258821480778}
+  - component: {fileID: 2746247928153873422}
   m_Layer: 16
   m_Name: Player
   m_TagString: Player
@@ -2762,6 +2763,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 010dd7f2c19effc4dabbd9f4cfe8f150, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  HP: 100
 --- !u!114 &8460231187354856007
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2848,6 +2850,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCombatHandler
   equippedWeapon: {fileID: 2985623970877219946}
+--- !u!136 &2746247928153873422
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7371818208716959394}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 32768
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 3211264
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.25
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &7478612570809251734
 GameObject:
   m_ObjectHideFlags: 0
@@ -9950,14 +9975,10 @@ PrefabInstance:
     - target: {fileID: 4981342127194723766, guid: 75b51e3b614779440802c82b5d3ff139, type: 3}
       propertyPath: m_PanelSettings
       value: 
-      objectReference: {fileID: 11400000, guid: 24e68a14e9d785f4982660ca5c962400, type: 2}
+      objectReference: {fileID: 11400000, guid: 7c24a26041781ac42a745fbced32f3ed, type: 2}
     - target: {fileID: 6442186063574737963, guid: 75b51e3b614779440802c82b5d3ff139, type: 3}
       propertyPath: m_Name
       value: Player HUD
-      objectReference: {fileID: 0}
-    - target: {fileID: 6442186063574737963, guid: 75b51e3b614779440802c82b5d3ff139, type: 3}
-      propertyPath: m_Layer
-      value: 16
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UIElements;
@@ -20,6 +21,8 @@ public class PlayerMovementResolver : MonoBehaviour
     float fullInputTimer;
     float targetAnimVelocity;
     float currentVelocity;
+    bool canMove = true;
+
 
     [SerializeField] float rotationSpeed = 10f;
     [SerializeField] float inputDeadzone = 0.1f;
@@ -35,7 +38,6 @@ public class PlayerMovementResolver : MonoBehaviour
 
     [SerializeField] UIDocument doc;
 
-    VisualElement velocityText;
 
     void Awake()
     {
@@ -48,7 +50,6 @@ public class PlayerMovementResolver : MonoBehaviour
         agent.updateRotation = false;
 
 
-        velocityText = doc.rootVisualElement.Q("velocity_text");
     }
 
     bool isCrouching = false;
@@ -61,6 +62,8 @@ public class PlayerMovementResolver : MonoBehaviour
 
     void Update()
     {
+        if (!canMove) return;
+
         moveInput = inputs.MoveInput;
 
         // Apply deadzone to raw input
@@ -121,15 +124,6 @@ public class PlayerMovementResolver : MonoBehaviour
         player.SetFocus(isFocus);
     }
 
-
-    private void LateUpdate()
-    {
-        var text = velocityText as TextElement;
-        if (text != null)
-        {
-            text.text = $"Velocity: {agent.velocity:.2f}";
-        }
-    }
 
     bool HasMovementInput() => moveInput.sqrMagnitude >= inputDeadzone * inputDeadzone;
 
@@ -247,4 +241,8 @@ public class PlayerMovementResolver : MonoBehaviour
         currentVelocity = Mathf.MoveTowards(currentVelocity, targetAnimVelocity, Time.deltaTime / runRampTime);
     }
 
+    internal void Lock()
+    {
+        canMove = false;
+    }
 }

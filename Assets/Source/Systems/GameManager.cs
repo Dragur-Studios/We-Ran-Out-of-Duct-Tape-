@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -14,6 +15,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] bool playground_scene_auto = false;
 
     static PlayerSaveData testSave() => new PlayerSaveData { WorldPosition = Vector3.zero, WorldRotation = Quaternion.identity };
+
+    public Action OnPlayerSpawned;
+    public Action OnPlayerDied;
 
     private void Awake()
     {
@@ -36,6 +40,18 @@ public class GameManager : MonoBehaviour
         {
             GameSceneLoader.LoadSceneCustom("Playground");
         }
+    }
+
+    public void PlayerDied()
+    {
+        StartCoroutine(nameof(PlayerDeathDelayMenu));
+    }
+
+    IEnumerator PlayerDeathDelayMenu()
+    {
+        yield return new WaitForSeconds(2);
+        OnPlayerDied?.Invoke();
+        yield return null;
     }
 
     public void HideCursor()
@@ -91,6 +107,8 @@ public class GameManager : MonoBehaviour
 
         player = go.GetComponent<Player>();
         player.Initilize();
+
+        OnPlayerSpawned?.Invoke();
     }
     internal void SpawnPlayer()
     {
@@ -101,7 +119,7 @@ public class GameManager : MonoBehaviour
         player = go.GetComponent<Player>();
         player.Initilize();
 
-
+        OnPlayerSpawned?.Invoke();
     }
 
 

@@ -60,6 +60,8 @@ public class PlayerCameraHandler : MonoBehaviour
 
     void LateUpdate()
     {
+        if (isLock) return;
+
         // --- 1. Read input ---
         Vector2 lookInput = inputs.LookInput;
 
@@ -93,5 +95,12 @@ public class PlayerCameraHandler : MonoBehaviour
     public void SetPlayer(Player player)
     {
         this.player = player;
+    }
+
+    bool isLock = false;
+
+    internal void Lock()
+    {
+        isLock = true;
     }
 }
