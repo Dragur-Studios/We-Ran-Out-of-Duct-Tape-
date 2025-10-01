@@ -1,8 +1,7 @@
-using System;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Enemy : MonoBehaviour
+public class Enemy : SoundWaveListener
 {
     float HP = 100;
 
@@ -13,10 +12,42 @@ public class Enemy : MonoBehaviour
         behaviorResolver = GetComponent<EnemyBehaviorResolver>();        
     }
 
+
+    protected override void ReactToSoundHeard(Vector3 sourcePos, string tag)
+    {
+        behaviorResolver.AlertToPlayer(sourcePos);
+    }
+
     // Update is called once per frame
+
+    public bool isPlayerHoveringMe = false;
+
+    public void SetLayer(string layerName)
+    {
+        int layerIndex = LayerMask.NameToLayer(layerName);
+        if (layerIndex == -1)
+        {
+            Debug.LogWarning($"Layer \"{layerName}\" does not exist!");
+            return;
+        }
+
+        gameObject.layer = layerIndex;
+
+        var skinnedMeshes = GetComponentsInChildren<SkinnedMeshRenderer>();
+        foreach (var mesh in skinnedMeshes)
+        {
+            mesh.gameObject.layer = layerIndex;
+        }
+    }
+
+
     void Update()
     {
-        if(HP <= 0)
+
+        SetLayer(isPlayerHoveringMe ? "Enemy - Outline" : "Enemy");
+
+
+        if (HP <= 0)
         {
             var anim = GetComponentInChildren<Animator>();
             anim.SetTrigger("Death");
@@ -29,8 +60,12 @@ public class Enemy : MonoBehaviour
             var nma = col.GetComponent<NavMeshAgent>();
             nma.enabled = false;
 
-
         }
+    }
+
+    private void LateUpdate()
+    {
+        isPlayerHoveringMe = false;
     }
 
     public void DealDamage(float value)
@@ -43,5 +78,10 @@ public class Enemy : MonoBehaviour
     internal int GetDamage()
     {
         return DamagePotential;
+    }
+
+    public  void SetIsPlayerLookingAtMe(bool v)
+    {
+        isPlayerHoveringMe = v;
     }
 }

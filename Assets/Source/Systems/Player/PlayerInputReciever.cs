@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerInputReciever : MonoBehaviour
 {
@@ -22,18 +23,28 @@ public class PlayerInputReciever : MonoBehaviour
     public bool Fire { get => _fire; }
 
     public bool Interact { get => _interact; }
+
+    public bool IsMouse { get; private set; }
     private void OnEnable()
     {
         if(controls == null)
         {
             controls = new PlayerControls();
-
+            controls.Player.Look.performed += ctx =>
+             {
+                 var device = ctx.control.device;
+                 if (device is Mouse)
+                     IsMouse = true;
+                 else if (device is Gamepad)
+                     IsMouse = false;
+             };
             controls.Enable();
         }
     }
 
     private void Update()
     {
+
         _moveInput = controls.Player.Move.ReadValue<Vector2>();
         _lookInput = controls.Player.Look.ReadValue<Vector2>();
         _crouch = controls.Player.Crouch.ReadValue<float>() > 0.5f;

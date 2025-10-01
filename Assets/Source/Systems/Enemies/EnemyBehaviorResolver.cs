@@ -1,3 +1,5 @@
+using System.Collections;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -6,7 +8,14 @@ using UnityEngine.AI;
 public class EnemyBehaviorResolver : MonoBehaviour
 {
     public enum ZombieType { Shambler, Sprinter }
-    enum EnemyState { Passive, Swarming, Chasing, Attacking }
+    public enum EnemyState
+    {
+        Passive,
+        Swarming,
+        Chasing,
+        Attacking,
+        Investigating
+    }
     EnemyState currentState = EnemyState.Passive;
     [Header("Zombie Type")]
     public ZombieType zombieType = ZombieType.Shambler;
@@ -36,6 +45,13 @@ public class EnemyBehaviorResolver : MonoBehaviour
     public float wanderInterval = 4f;
     private float wanderTimer;
     private bool passive = false;
+
+    [SerializeField] float aggroMemory = 5f; // seconds they remember the player
+    private float lastTimePlayerSeen = Mathf.NegativeInfinity;
+    [SerializeField] float investigateDuration = 5f;
+    private Vector3 lastKnownPlayerPos;
+    private float investigateTimer;
+
     public void SetPassive(bool value)
     {
         passive = value;
@@ -119,9 +135,13 @@ public class EnemyBehaviorResolver : MonoBehaviour
             case EnemyState.Passive:
                 agent.updateRotation = true;
                 WanderAndCluster();
-                if (CanSeePlayer() || CanHearPlayer())
+                if (CanSeePlayer())
+                {
+                    lastTimePlayerSeen = Time.time;
+
                     currentState = EnemyState.Chasing;
-                break;
+                }
+                   break;
 
             case EnemyState.Swarming:
                 agent.updateRotation = false;
@@ -132,18 +152,90 @@ public class EnemyBehaviorResolver : MonoBehaviour
                 break;
 
             case EnemyState.Chasing:
+
+                if (CanSeePlayer())
+                {
+                    lastKnownPlayerPos = target.position;
+                    agent.SetDestination(target.position);
+                }
+                else
+                {
+                    // Lost sight — switch to investigating
+                    currentState = EnemyState.Investigating;
+                    investigateTimer = investigateDuration;
+                    agent.SetDestination(lastKnownPlayerPos);
+                }
+
                 agent.isStopped = false;
                 agent.stoppingDistance = attackRange - 0.1f;
                 agent.SetDestination(target.position);
+
                 if (distance <= attackRange)
                     currentState = EnemyState.Attacking;
-                break;
 
+                // Lose aggro if player not seen for too long
+                if (!CanSeePlayer() && Time.time - lastTimePlayerSeen > aggroMemory)
+                {
+                    currentState = EnemyState.Passive;
+                }
+
+                break;
+            case EnemyState.Investigating:
+                agent.isStopped = false;
+                agent.stoppingDistance = 0f;
+
+                // If they see the player, escalate to chase
+                if (CanSeePlayer())
+                {
+                    currentState = EnemyState.Chasing;
+                    break;
+                }
+
+                // Countdown search time
+                investigateTimer -= Time.deltaTime;
+
+                // If reached current search point, pick a new one
+                if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance + 0.2f)
+                {
+                    if (investigateTimer > 0f)
+                        SetNewInvestigatePoint();
+                }
+
+                // If timer runs out, give up
+                if (investigateTimer <= 0f)
+                {
+                    currentState = EnemyState.Passive;
+                }
+                break;
             case EnemyState.Attacking:
                 AttackBehavior(distance);
                 break;
         }
     }
+    public void AlertToPlayer(Vector3 soundPos)
+    {
+        if (currentState == EnemyState.Passive || currentState == EnemyState.Swarming)
+        {
+            lastKnownPlayerPos = soundPos;
+            investigateTimer = investigateDuration;
+
+            currentState = EnemyState.Investigating;
+            agent.isStopped = false;
+            SetNewInvestigatePoint();
+        }
+    }
+
+    [SerializeField] float investigateRadius = 5f;
+
+    private void SetNewInvestigatePoint()
+    {
+        // Pick a random point near the last known sound position
+        Vector2 randomCircle = Random.insideUnitCircle * investigateRadius;
+        Vector3 candidate = lastKnownPlayerPos + new Vector3(randomCircle.x, 0, randomCircle.y);
+
+        agent.SetDestination(candidate);
+    }
+
 
     // ---------------- Passive Wander + Cluster ----------------
     private void WanderAndCluster()
@@ -283,37 +375,70 @@ public class EnemyBehaviorResolver : MonoBehaviour
 
 
 
+    [SerializeField, Range(30f, 180f)] float visionAngle = 90f; // cone angle
+
     private bool CanSeePlayer()
     {
         if (target == null) return false;
-        Vector3 dir = (target.position - transform.position);
-        if (dir.magnitude > visionRange) return false;
 
-        // Raycast to check line of sight
-        if (Physics.Raycast(transform.position + Vector3.up, dir.normalized, out RaycastHit hit, visionRange, visionMask))
+        Vector3 dirToPlayer = (target.position - transform.position).normalized;
+        float distanceToPlayer = Vector3.Distance(transform.position, target.position);
+
+        // 1. Check distance
+        if (distanceToPlayer > visionRange) return false;
+
+        // 2. Check angle (frustum cone)
+        float angle = Vector3.Angle(transform.forward, dirToPlayer);
+        if (angle > visionAngle * 0.5f) return false;
+
+        // 3. Raycast for occlusion
+        if (Physics.Raycast(transform.position + Vector3.up, dirToPlayer, out RaycastHit hit, visionRange, visionMask))
         {
+            if(hit.collider.tag != "Player")
+            {
+                return false;
+            }
             return hit.transform == target;
         }
+
         return false;
     }
 
-    private bool CanHearPlayer()
+
+    private void OnDrawGizmosSelected()
     {
-        if (target == null) return false;
-        return Vector3.Distance(transform.position, target.position) <= hearingRange;
+        bool canSeePlayer = CanSeePlayer();
+
+        var color =  canSeePlayer ? new Color(0, 0.5f, 0.5f, 0.25f) : new Color(1f, 0.5f, 0f, 0.25f); // translucent orange cone
+
+        // Draw forward direction line
+        Vector3 forward = transform.forward * visionRange;
+        //Gizmos.DrawRay(transform.position + Vector3.up, forward);
+
+        // Calculate left/right boundaries of the cone
+        Quaternion leftRot = Quaternion.AngleAxis(-visionAngle * 0.5f, Vector3.up);
+        Quaternion rightRot = Quaternion.AngleAxis(visionAngle * 0.5f, Vector3.up);
+
+        Vector3 leftDir = leftRot * transform.forward;
+        Vector3 rightDir = rightRot * transform.forward;
+
+        // Draw cone edges
+
+        // Optional: draw an arc to visualize the cone
+#if UNITY_EDITOR
+        Handles.color = color;
+        Handles.DrawSolidArc(
+            transform.position,
+            Vector3.up,
+            leftDir,
+            visionAngle,
+            visionRange
+        );
+#endif
     }
 
 
 
-
-    void OnDrawGizmos()
-    {
-        if (agent != null && agent.hasPath)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawSphere(agent.destination, 0.2f);
-        }
-    }
     private void Attack()
     {
         var anim = GetComponentInChildren<Animator>();

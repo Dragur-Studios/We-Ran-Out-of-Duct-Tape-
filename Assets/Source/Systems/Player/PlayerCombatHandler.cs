@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using Unity.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 using UnityEngine.InputSystem;
@@ -13,8 +10,10 @@ public class PlayerCombatHandler : MonoBehaviour
     PlayerRigOrchastrator rigs;
     PlayerInputReciever inputs;
 
-
     bool isLock = false;
+
+    [SerializeField] float lookRange = 20f;       // how far forward to check
+    [SerializeField] LayerMask enemyMask;         // assign "Enemy" layer in inspector
 
     internal void Lock()
     {
@@ -31,12 +30,42 @@ public class PlayerCombatHandler : MonoBehaviour
     {
         if (isLock) return;
 
+        if (inputs.Focus)
+        {
+            equippedWeapon.EnableLaserPointer();
+        }
+        else
+        {
+            equippedWeapon.DisableLaserPointer();
+        }
+
+
         if (inputs.Fire)
         {
             rigs.TryFire(equippedWeapon.Fire);
-            
         }
+
+        CheckEnemyLook();
     }
 
-
+    private void CheckEnemyLook()
+    {
+        // Cast a ray from the player’s position forward
+        Ray ray = new Ray(transform.position + Vector3.up * 1.5f, transform.forward);
+        if (Physics.Raycast(ray, out RaycastHit hit, lookRange, enemyMask))
+        {
+            // If we hit an enemy, set its flag
+            Enemy enemy = hit.collider.GetComponentInParent<Enemy>();
+            if (enemy != null)
+            {
+                // You’ll need to add this property/method to Enemy
+                enemy.SetIsPlayerLookingAtMe(true);
+            }
+        }
+        else
+        {
+            // Optionally, clear the flag on all enemies in range
+            // (depends on your design — you might want enemies to reset themselves)
+        }
+    }
 }

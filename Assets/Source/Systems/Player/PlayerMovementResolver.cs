@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
 
@@ -147,8 +148,23 @@ public class PlayerMovementResolver : MonoBehaviour
     {
         Vector3 targetDir = Vector3.zero;
 
+        if (inputs.Focus && inputs.IsMouse) 
+        {
+            Ray ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
+
+            // Assume ground plane at player height
+            Plane groundPlane = new Plane(Vector3.up, transform.position);
+            if (groundPlane.Raycast(ray, out float enter))
+            {
+                Vector3 hitPoint = ray.GetPoint(enter);
+                targetDir = hitPoint - transform.position;
+
+                // Keep aimTarget synced to mouse hit
+                aimTarget.position = hitPoint;
+            }
+        }
         // Priority 1: right stick / mouse aim
-        if (inputs.Focus && inputs.LookInput.sqrMagnitude > 0.01f)
+        else if (inputs.Focus && inputs.LookInput.sqrMagnitude > 0.01f)
         {
             targetDir = (aimTarget.position - transform.position);
         }
@@ -169,17 +185,26 @@ public class PlayerMovementResolver : MonoBehaviour
             );
         }
     }
-    [SerializeField] float aimDistance = 5f; // how far in front of player the aim target sits
+    [SerializeField] float aimDistance = 20f; // how far in front of player the aim target sits
 
     void UpdateAimTarget()
     {
         if (!inputs.Focus)
+        {
+            aimTarget.position = transform.position;
             return;
-
-        Vector2 aimInput = inputs.LookInput; 
+        }
+        Vector2 aimInput = inputs.LookInput;
 
         if (aimInput.sqrMagnitude < 0.01f)
+        {
+            aimTarget.position = Vector3.Lerp(
+                aimTarget.position,
+                transform.position,
+                Time.deltaTime * 10f // tweak speed
+            );
             return;
+        }
 
         // --- 1. Convert stick input into screen-space direction ---
         Vector3 screenDir = new Vector3(aimInput.x, aimInput.y, 0f);

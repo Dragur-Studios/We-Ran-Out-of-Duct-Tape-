@@ -16,10 +16,27 @@ public class Weapon : MonoBehaviour
 
     [SerializeField] WeaponData data;
     public float FireRate { get => data.FireRate; }
-
+    
+    [SerializeField] GameObject laserPointer;
+    
     float y = 0;
+    
+    bool laserEnabled = false;
 
+    public void EnableLaserPointer()
+    {
+        laserEnabled = true;
+    }
 
+    public void DisableLaserPointer()
+    {
+        laserEnabled = false;
+    }
+
+    private void Update()
+    {
+        laserPointer.SetActive(laserEnabled);
+    }
     void SpawnMuzzleFlash(Transform t)
     {
         var go = Instantiate(vfx_MuzzleFlash);
@@ -35,7 +52,7 @@ public class Weapon : MonoBehaviour
         // HANDLE SPAWING OF BULLET.
         SpawnBullet(muzzleOrigin);
 
-     
+
         Gamepad pad = Gamepad.all.Count > 0 ? Gamepad.all[0] : null;
 
         var pkt = new FeedbackPacket()
@@ -54,6 +71,7 @@ public class Weapon : MonoBehaviour
 
         // HANDLE SPAWNING OF PARTICLE EFFECT.
         SpawnMuzzleFlash(muzzleOrigin);
+        GetComponent<SoundWaveEmitter>().Emit();
        
     }
 
