@@ -60,6 +60,8 @@ public class Enemy : SoundWaveListener
             var nma = col.GetComponent<NavMeshAgent>();
             nma.enabled = false;
 
+            SoundWaveManager.RemoveListener(this);
+
         }
     }
 

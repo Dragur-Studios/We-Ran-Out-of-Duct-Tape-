@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class GunshotSound : SoundWaveEmitter
-{
-    void Start()
-    {
-        Emit();       
-    }
+//public class GunshotSound : SoundWaveEmitter
+//{
+//    void Start()
+//    {
+//        Emit();       
+//    }
 
-}
+//}

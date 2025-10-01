@@ -193,6 +193,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2747794241594692205, guid: c1efe8d9ca11fb44089b4687d2cf499b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 319699546}
+    - targetCorrespondingSourceObject: {fileID: 2747794241594692205, guid: c1efe8d9ca11fb44089b4687d2cf499b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 319699547}
   m_SourcePrefab: {fileID: 100100000, guid: c1efe8d9ca11fb44089b4687d2cf499b, type: 3}
 --- !u!4 &111512259 stripped
 Transform:
@@ -341,6 +344,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d93472e09df8454bbd4611dc60fad91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+--- !u!114 &319699547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 319699544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d57db5c408a23cf48b77ab1fcb9ae4a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  CurrentBiome: {fileID: 0}
 --- !u!1 &400499098
 GameObject:
   m_ObjectHideFlags: 1

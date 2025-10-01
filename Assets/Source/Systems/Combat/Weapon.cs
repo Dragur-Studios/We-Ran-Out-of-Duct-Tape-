@@ -1,7 +1,5 @@
 using System;
-using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
-using UnityEngine.Experimental.Rendering;
 using UnityEngine.InputSystem;
 
 public class Weapon : MonoBehaviour

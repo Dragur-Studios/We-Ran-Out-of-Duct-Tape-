@@ -154,6 +154,51 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ItemSlot1"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""aa1e5ea7-dbac-4437-bf99-0c7a9f590343"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ItemSlot2"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""76351955-0e22-4853-91e6-5bc978b9a4d6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ItemSlot3"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""e094ba57-1aae-40cb-9d3d-ab257fd3b3e0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ItemSlot4"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""e67866de-28e1-47c8-94e4-b3935f60125c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RotateCamera"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""dc764f49-efba-4712-b937-98d416972636"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -354,6 +399,160 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Fire"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0ba5d63d-3c61-4fa1-bb5a-4ef3a0c53bb7"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""ItemSlot1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""48a6ed53-edc9-4b90-9256-6f8ae0de8c71"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""ItemSlot1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8e74f89b-b3ef-4559-b729-1f25c81caab3"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""ItemSlot2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""31fbee2b-2204-424f-a196-30e4147ee81c"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""ItemSlot2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3bba46d2-84a4-4790-acf4-9011d31dfd00"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""ItemSlot3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2fbe049d-3dba-4c11-9a28-c94319952996"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""ItemSlot3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ffbf3992-1eb1-4e94-8def-354f9645453f"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""ItemSlot4"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6b69aaa6-beed-4cba-81ec-7a231759d228"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""ItemSlot4"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""827ebc51-befd-42ee-abae-01cde329e8d7"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RotateCamera"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""2fb81bd1-85c5-4a16-a1a5-d32ac227a7fe"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""RotateCamera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""086b3c55-4fee-4645-8e96-a9f52c16dc6a"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""RotateCamera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""401fc374-9bdc-4c02-bd57-674e04ec17ab"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RotateCamera"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""dc06339b-39d6-4116-a807-6f4210360be0"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""RotateCamera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""a9e9bbef-99a2-4adb-a55a-4e99e3625791"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""RotateCamera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         },
@@ -913,6 +1112,11 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Player_Focus = m_Player.FindAction("Focus", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
+        m_Player_ItemSlot1 = m_Player.FindAction("ItemSlot1", throwIfNotFound: true);
+        m_Player_ItemSlot2 = m_Player.FindAction("ItemSlot2", throwIfNotFound: true);
+        m_Player_ItemSlot3 = m_Player.FindAction("ItemSlot3", throwIfNotFound: true);
+        m_Player_ItemSlot4 = m_Player.FindAction("ItemSlot4", throwIfNotFound: true);
+        m_Player_RotateCamera = m_Player.FindAction("RotateCamera", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1013,6 +1217,11 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Focus;
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_Fire;
+    private readonly InputAction m_Player_ItemSlot1;
+    private readonly InputAction m_Player_ItemSlot2;
+    private readonly InputAction m_Player_ItemSlot3;
+    private readonly InputAction m_Player_ItemSlot4;
+    private readonly InputAction m_Player_RotateCamera;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -1052,6 +1261,26 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/Fire".
         /// </summary>
         public InputAction @Fire => m_Wrapper.m_Player_Fire;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/ItemSlot1".
+        /// </summary>
+        public InputAction @ItemSlot1 => m_Wrapper.m_Player_ItemSlot1;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/ItemSlot2".
+        /// </summary>
+        public InputAction @ItemSlot2 => m_Wrapper.m_Player_ItemSlot2;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/ItemSlot3".
+        /// </summary>
+        public InputAction @ItemSlot3 => m_Wrapper.m_Player_ItemSlot3;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/ItemSlot4".
+        /// </summary>
+        public InputAction @ItemSlot4 => m_Wrapper.m_Player_ItemSlot4;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/RotateCamera".
+        /// </summary>
+        public InputAction @RotateCamera => m_Wrapper.m_Player_RotateCamera;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1099,6 +1328,21 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Fire.started += instance.OnFire;
             @Fire.performed += instance.OnFire;
             @Fire.canceled += instance.OnFire;
+            @ItemSlot1.started += instance.OnItemSlot1;
+            @ItemSlot1.performed += instance.OnItemSlot1;
+            @ItemSlot1.canceled += instance.OnItemSlot1;
+            @ItemSlot2.started += instance.OnItemSlot2;
+            @ItemSlot2.performed += instance.OnItemSlot2;
+            @ItemSlot2.canceled += instance.OnItemSlot2;
+            @ItemSlot3.started += instance.OnItemSlot3;
+            @ItemSlot3.performed += instance.OnItemSlot3;
+            @ItemSlot3.canceled += instance.OnItemSlot3;
+            @ItemSlot4.started += instance.OnItemSlot4;
+            @ItemSlot4.performed += instance.OnItemSlot4;
+            @ItemSlot4.canceled += instance.OnItemSlot4;
+            @RotateCamera.started += instance.OnRotateCamera;
+            @RotateCamera.performed += instance.OnRotateCamera;
+            @RotateCamera.canceled += instance.OnRotateCamera;
         }
 
         /// <summary>
@@ -1131,6 +1375,21 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Fire.started -= instance.OnFire;
             @Fire.performed -= instance.OnFire;
             @Fire.canceled -= instance.OnFire;
+            @ItemSlot1.started -= instance.OnItemSlot1;
+            @ItemSlot1.performed -= instance.OnItemSlot1;
+            @ItemSlot1.canceled -= instance.OnItemSlot1;
+            @ItemSlot2.started -= instance.OnItemSlot2;
+            @ItemSlot2.performed -= instance.OnItemSlot2;
+            @ItemSlot2.canceled -= instance.OnItemSlot2;
+            @ItemSlot3.started -= instance.OnItemSlot3;
+            @ItemSlot3.performed -= instance.OnItemSlot3;
+            @ItemSlot3.canceled -= instance.OnItemSlot3;
+            @ItemSlot4.started -= instance.OnItemSlot4;
+            @ItemSlot4.performed -= instance.OnItemSlot4;
+            @ItemSlot4.canceled -= instance.OnItemSlot4;
+            @RotateCamera.started -= instance.OnRotateCamera;
+            @RotateCamera.performed -= instance.OnRotateCamera;
+            @RotateCamera.canceled -= instance.OnRotateCamera;
         }
 
         /// <summary>
@@ -1441,6 +1700,41 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnFire(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ItemSlot1" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnItemSlot1(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ItemSlot2" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnItemSlot2(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ItemSlot3" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnItemSlot3(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ItemSlot4" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnItemSlot4(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "RotateCamera" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnRotateCamera(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

@@ -63,12 +63,12 @@ public class PlayerCameraHandler : MonoBehaviour
         if (isLock) return;
 
         // --- 1. Read input ---
-        Vector2 lookInput = inputs.LookInput;
-
+        var rotate = inputs.CameraRotation;
         // --- 2. Apply sensitivity & accumulate rotation ---
         // we can only rotate.. when NOT aiming down sight.
-        if(!inputs.Focus)
-            yaw += lookInput.x * sensitivityX * Time.deltaTime;
+        
+        yaw += rotate * sensitivityX * Time.deltaTime;
+        
         //pitch -= lookInput.y * sensitivityY * Time.deltaTime;
         //pitch = Mathf.Clamp(pitch, minPitch, maxPitch);  
 
