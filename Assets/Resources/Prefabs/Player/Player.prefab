@@ -2967,7 +2967,7 @@ MonoBehaviour:
   lookRange: 100
   enemyMask:
     serializedVersion: 2
-    m_Bits: 49152
+    m_Bits: 0
 --- !u!136 &2746247928153873422
 CapsuleCollider:
   m_ObjectHideFlags: 0

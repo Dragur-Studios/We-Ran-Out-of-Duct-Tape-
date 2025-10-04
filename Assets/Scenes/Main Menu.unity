@@ -133,12 +133,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4214022919379965020, guid: c1efe8d9ca11fb44089b4687d2cf499b, type: 3}
       propertyPath: lock_cursor
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4214022919379965020, guid: c1efe8d9ca11fb44089b4687d2cf499b, type: 3}
       propertyPath: Enemy_prefab
       value: 
       objectReference: {fileID: 95591468498797003, guid: 19b23609e1780c04dbf3278ca49d6809, type: 3}
+    - target: {fileID: 4214022919379965020, guid: c1efe8d9ca11fb44089b4687d2cf499b, type: 3}
+      propertyPath: start_scene_auto
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4214022919379965020, guid: c1efe8d9ca11fb44089b4687d2cf499b, type: 3}
       propertyPath: playground_scene_auto
       value: 1
