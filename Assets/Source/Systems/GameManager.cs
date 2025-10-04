@@ -12,10 +12,10 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] bool lock_cursor = false;
     
-    [SerializeField] bool playground_scene_auto = false;
-
+    [SerializeField] bool start_scene_auto = false;
+    [SerializeField] string scene_name = "";
+    
     static PlayerSaveData testSave() => new PlayerSaveData { WorldPosition = Vector3.zero, WorldRotation = Quaternion.identity };
-
     public Action OnPlayerSpawned;
     public Action OnPlayerDied;
 
@@ -36,9 +36,9 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        if (playground_scene_auto)
+        if (start_scene_auto && !string.IsNullOrEmpty(scene_name))
         {
-            GameSceneLoader.LoadSceneCustom("Playground");
+            GameSceneLoader.LoadSceneCustom(scene_name);
         }
     }
 
@@ -92,10 +92,7 @@ public class GameManager : MonoBehaviour
         var go = Instantiate(Enemy_prefab);
         go.transform.position = spawnPos;
         go.transform.rotation = spawnRot;
-
-        var enemy = go.GetComponent<EnemyBehaviorResolver>();
-        
-        
+   
         return go;
 
     }
@@ -134,6 +131,43 @@ public class GameManager : MonoBehaviour
             HideCursor();
     }
 
+    bool isPaused = false;
+
+    internal static void TryPause()
+    {
+        Instance.HandlePause();
+    }
+    private void Update()
+    {
+        if(delayPauseTimer > 0)
+        {
+            delayPauseTimer -= Time.deltaTime; 
+        }
+
+        if(delayPauseTimer < 0)
+        {
+            delayPauseTimer = 0;
+        }
+
+
+    }
+
+
+    float delayPauseTime = 0.3f;
+    float delayPauseTimer = 0.0f;
+
+    private void HandlePause()
+    {
+        if (delayPauseTimer > 0.0f) return;
+
+        delayPauseTimer = delayPauseTime;
+        isPaused = !isPaused;
+
+        OnPause?.Invoke(isPaused);
+    }
+
     Player player;
     public Player Player { get { return player; } }
+
+    public Action<bool> OnPause;
 }

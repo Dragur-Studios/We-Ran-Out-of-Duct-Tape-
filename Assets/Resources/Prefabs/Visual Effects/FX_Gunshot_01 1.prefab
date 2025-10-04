@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 198076924919084778}
   - component: {fileID: 199368111847782378}
   m_Layer: 0
-  m_Name: FX_Gunshot_01
+  m_Name: FX_Gunshot_01 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

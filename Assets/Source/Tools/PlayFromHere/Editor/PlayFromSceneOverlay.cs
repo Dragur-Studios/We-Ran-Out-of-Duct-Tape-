@@ -37,8 +37,17 @@ public class PlayFromSceneListOverlay : Overlay
         playButton.AddToClassList("unity-toolbar-button");
         playButton.RegisterValueChangedCallback(evt =>
         {
-            if (evt.newValue) CacheAndPlay();
-            else EditorApplication.isPlaying = false;
+            if (evt.newValue)
+            {
+                if (playModeOverrideScene != null)
+                    CacheAndPlay();
+                else
+                    EditorApplication.isPlaying = true;
+            }
+            else
+            {
+                EditorApplication.isPlaying = false;
+            }
         });
 
         var pauseButton = new ToolbarToggle { text = "⏸" };

@@ -199,6 +199,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""TryPause"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""307d740c-138f-4fbb-9338-8cc0745067b2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -553,6 +562,28 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""RotateCamera"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e2343159-1a11-443f-9b58-4dde44b21e6a"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""TryPause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0468dc78-1870-4640-9260-6a03935d343b"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""TryPause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -1117,6 +1148,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Player_ItemSlot3 = m_Player.FindAction("ItemSlot3", throwIfNotFound: true);
         m_Player_ItemSlot4 = m_Player.FindAction("ItemSlot4", throwIfNotFound: true);
         m_Player_RotateCamera = m_Player.FindAction("RotateCamera", throwIfNotFound: true);
+        m_Player_TryPause = m_Player.FindAction("TryPause", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1222,6 +1254,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_ItemSlot3;
     private readonly InputAction m_Player_ItemSlot4;
     private readonly InputAction m_Player_RotateCamera;
+    private readonly InputAction m_Player_TryPause;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -1281,6 +1314,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/RotateCamera".
         /// </summary>
         public InputAction @RotateCamera => m_Wrapper.m_Player_RotateCamera;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/TryPause".
+        /// </summary>
+        public InputAction @TryPause => m_Wrapper.m_Player_TryPause;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1343,6 +1380,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @RotateCamera.started += instance.OnRotateCamera;
             @RotateCamera.performed += instance.OnRotateCamera;
             @RotateCamera.canceled += instance.OnRotateCamera;
+            @TryPause.started += instance.OnTryPause;
+            @TryPause.performed += instance.OnTryPause;
+            @TryPause.canceled += instance.OnTryPause;
         }
 
         /// <summary>
@@ -1390,6 +1430,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @RotateCamera.started -= instance.OnRotateCamera;
             @RotateCamera.performed -= instance.OnRotateCamera;
             @RotateCamera.canceled -= instance.OnRotateCamera;
+            @TryPause.started -= instance.OnTryPause;
+            @TryPause.performed -= instance.OnTryPause;
+            @TryPause.canceled -= instance.OnTryPause;
         }
 
         /// <summary>
@@ -1735,6 +1778,13 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnRotateCamera(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "TryPause" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnTryPause(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

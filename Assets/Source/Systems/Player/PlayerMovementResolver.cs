@@ -49,8 +49,6 @@ public class PlayerMovementResolver : MonoBehaviour
 
         agent.updatePosition = false;
         agent.updateRotation = false;
-
-
     }
 
     bool isCrouching = false;

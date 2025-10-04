@@ -11,6 +11,10 @@ public enum SpawnVolumeType
 
 public class AmbientSpawner : MonoBehaviour
 {
+    [Header("Editor Only!")]
+    [SerializeField] bool is_simulationMode = false;
+    [SerializeField] GameObject[] simulationPrefabs;
+
     [Header("Spawn Settings")]
     public int maxZombies = 10;
     public SpawnVolumeType volumeType = SpawnVolumeType.Sphere;
@@ -70,7 +74,34 @@ public class AmbientSpawner : MonoBehaviour
     {
         if (NavMesh.SamplePosition(pos, out var hit, 5f, NavMesh.AllAreas))
         {
-            var zombie = GameManager.Instance.SpawnEnemy(hit.position, Quaternion.identity);
+
+            GameObject zombie = null;
+            if (is_simulationMode)
+            {
+                // determine zombie by probabillity.
+                // right now there is only the shambler types as prefabs.. but should soon be 
+                // phased into their own prefabs.
+
+
+                zombie = Instantiate(simulationPrefabs[0]);
+
+                zombie.transform.position = hit.position;
+
+                Vector2 offset = Random.insideUnitCircle;
+                Vector3 targetPosition = hit.position + new Vector3(offset.x, 0, offset.y);
+                var dir = targetPosition - hit.position;
+
+                if (dir.sqrMagnitude < 0.0001f)
+                    dir = Vector3.forward;
+
+                Quaternion lookDir = Quaternion.LookRotation(dir);
+
+                zombie.transform.rotation = lookDir;
+            }   
+            else
+            {
+               zombie =  GameManager.Instance.SpawnEnemy(hit.position, Quaternion.identity);
+            }
             zombies.Add(zombie);
 
             var resolver = zombie.GetComponent<EnemyBehaviorResolver>();

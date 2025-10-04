@@ -9,7 +9,7 @@ public class Enemy : SoundWaveListener
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        behaviorResolver = GetComponent<EnemyBehaviorResolver>();        
+        behaviorResolver = GetComponent<EnemyBehaviorResolver>();     
     }
 
 

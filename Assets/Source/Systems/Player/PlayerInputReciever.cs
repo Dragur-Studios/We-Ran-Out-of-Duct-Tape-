@@ -18,6 +18,8 @@ public class PlayerInputReciever : MonoBehaviour
     bool _itemSlot3;
     bool _itemSlot4;
 
+    bool _pauseFlag;
+
     float _rotateCamera;
 
     public Vector2 MoveInput { get => _moveInput; }
@@ -35,21 +37,34 @@ public class PlayerInputReciever : MonoBehaviour
     public bool ItemSlot03 { get => _itemSlot3; }
     public bool ItemSlot04 { get => _itemSlot4; }
 
+    public bool PauseFlag { get => _pauseFlag; }
 
     public bool IsMouse { get; private set; }
+
     private void OnEnable()
     {
         if(controls == null)
         {
             controls = new PlayerControls();
             controls.Player.Look.performed += ctx =>
-             {
-                 var device = ctx.control.device;
-                 if (device is Mouse)
-                     IsMouse = true;
-                 else if (device is Gamepad)
-                     IsMouse = false;
-             };
+            {
+                var device = ctx.control.device;
+                if (device is Mouse)
+                    IsMouse = true;
+                else if (device is Gamepad)
+                    IsMouse = false;
+            };
+
+
+            controls.Player.TryPause.performed += ctx =>
+            {
+                if(ctx.ReadValue<float>()> 0.5f)
+                {
+                    GameManager.TryPause();
+                }
+            };
+
+
             controls.Enable();
         }
     }

@@ -84,7 +84,11 @@ public class EnemyBehaviorResolver : MonoBehaviour
         agent.radius = 0.25f;
         agent.avoidancePriority = Random.Range(30, 70);
 
-        target = GameManager.Instance.Player.transform;
+        //var exists = GameManager.Instance.Player != null;
+        //if (exists)
+        //{
+            target = GameManager.Instance.Player.transform;
+        //}
         wanderTimer = wanderInterval;
     }
 

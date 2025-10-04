@@ -16,8 +16,8 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - NavMesh_Obstructed
+  - NavMesh_Walkable
   - 
   - 
   - 
@@ -32,7 +32,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - LightDontAffectMe
   - 
   - 
   - Background

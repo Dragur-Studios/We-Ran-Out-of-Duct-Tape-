@@ -4,7 +4,18 @@ using System.Net;
 using UnityEngine;
 public class SoundWaveManager : MonoBehaviour
 {
-    public static SoundWaveManager Instance;
+    static SoundWaveManager _instance;
+    public static SoundWaveManager Instance {  get { return _instance; } }
+    //{
+    //    get
+    //    {
+    //        if (_instance == null) 
+    //        {
+    //            _instance = new GameObject("Sound Wave Manager(SIMULATION MODE)").AddComponent<SoundWaveManager>();
+    //        }
+    //        return _instance;
+    //    }
+    //}
 
     List<SoundWaveEmitter> emitters = new List<SoundWaveEmitter>();
     List<SoundWaveListener> listeners = new List<SoundWaveListener>();
@@ -14,12 +25,12 @@ public class SoundWaveManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance != null && Instance != this)
+        if (_instance != null && _instance != this)
         {
             Destroy(gameObject);
             return;
         }
-        Instance = this;
+        _instance = this;
     }
 
     private void Start()
