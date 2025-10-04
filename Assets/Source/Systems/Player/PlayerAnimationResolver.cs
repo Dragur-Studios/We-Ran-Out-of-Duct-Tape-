@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerAnimationResolver : MonoBehaviour
 {
@@ -47,6 +48,25 @@ public class PlayerAnimationResolver : MonoBehaviour
         animator.SetFloat(VERTICAL_HASH, hv.y, animSmoothTime, Time.deltaTime);
         animator.SetBool(INPUT_DETECT_HASH, hv.sqrMagnitude > 0.01f);
     }
+
+    public void OnFootstep(float baseIntensity)
+    {
+        // Clamp to a very subtle range
+        float intensity = Mathf.Clamp(baseIntensity, 0.001f, 0.005f);
+
+        var pkt = new FeedbackPacket();
+        pkt.IsGamepad = Gamepad.current != null;
+
+        // Only low motor for a "thud"
+        pkt.GamepadMotorLowFrequency = intensity;
+        pkt.GamepadMotorHighFrequency = 0f;
+
+        // Very short pulse
+        pkt.GamepadMotorFeedbackDuration = Random.Range(0.05f, 0.08f);
+
+        Haptics.ApplyFeedback(pkt);
+    }
+
 
     private void OnAnimatorMove()
     {

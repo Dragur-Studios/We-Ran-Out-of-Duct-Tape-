@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3293509735719259502}
   - component: {fileID: 4981342127194723766}
-  m_Layer: 5
+  - component: {fileID: 3453785690325812183}
+  m_Layer: 16
   m_Name: Player HUD
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,9 +45,9 @@ MonoBehaviour:
   m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
-  m_PanelSettings: {fileID: 11400000, guid: 7c24a26041781ac42a745fbced32f3ed, type: 2}
+  m_PanelSettings: {fileID: 11400000, guid: 24e68a14e9d785f4982660ca5c962400, type: 2}
   m_ParentUI: {fileID: 0}
-  sourceAsset: {fileID: 9197481963319205126, guid: d5fea96b21e03fc4d822167fc70bfd92, type: 3}
+  sourceAsset: {fileID: 9197481963319205126, guid: 9f7f8faaee1aa5d4c96719c1523aa2c7, type: 3}
   m_SortingOrder: 0
   m_Position: 0
   m_WorldSpaceSizeMode: 1
@@ -55,3 +56,16 @@ MonoBehaviour:
   m_PivotReferenceSize: 0
   m_Pivot: 0
   m_WorldSpaceCollider: {fileID: 0}
+--- !u!114 &3453785690325812183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6442186063574737963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c85110ca6e3d9a24dbd8238f98c5d5bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  playerHUD: {fileID: 4981342127194723766}

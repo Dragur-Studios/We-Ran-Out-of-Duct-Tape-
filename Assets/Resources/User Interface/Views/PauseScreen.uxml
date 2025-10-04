@@ -1,0 +1,29 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Resources/User%20Interface/Themes/main-menu.uss?fileID=7433441132597879392&amp;guid=0c4a96e9987436c47b94d6006dc1e491&amp;type=3#main-menu" />
+    <ui:VisualElement style="flex-grow: 1; background-color: rgb(22, 22, 22);">
+        <ui:VisualElement name="Tab-Parent" style="flex-grow: 1; flex-direction: row; height: 6%; -unity-text-align: upper-center; align-items: stretch; justify-content: center; margin-top: 12px; margin-right: 12px; margin-bottom: 12px; margin-left: 12px;">
+            <ui:Button text="Quests" name="QuestsTab_BTN" class="tab-button" />
+            <ui:Button text="Player" name="PlayerTab_BTN" class="tab-button" />
+            <ui:Button text="Map" name="MapTab_BTN" class="tab-button" />
+            <ui:Button text="Inventory" name="InventoryTab_BTN" class="tab-button" />
+            <ui:Button text="Equipment" name="EquipmentTab_BTN" class="tab-button" />
+            <ui:Button text="System" name="SystemTab_BTN" class="tab-button" />
+        </ui:VisualElement>
+        <ui:VisualElement name="Content" style="flex-grow: 2; height: 90%;">
+            <ui:VisualElement name="QuestsTabContent" style="flex-grow: 1; display: none;" />
+            <ui:VisualElement name="PlayerTabContent" style="flex-grow: 1; display: none;" />
+            <ui:VisualElement name="MapTabContent" style="flex-grow: 1; display: flex;">
+                <ui:VisualElement style="flex-grow: 1; background-image: resource(&apos;User Interface/Components/RP_MiniMap_1920x1080&apos;);" />
+            </ui:VisualElement>
+            <ui:VisualElement name="InventoryTabContent" style="flex-grow: 1; display: none;" />
+            <ui:VisualElement name="EquipmentTabContent" style="flex-grow: 1; display: none;" />
+            <ui:VisualElement name="SystemTabContent" style="flex-grow: 1; align-items: center; justify-content: center; display: none;">
+                <ui:Button text="Resume" name="Resume_BTN" class="menu-button" />
+                <ui:Button text="Load Previous Save" name="LoadGame_BTN" class="menu-button" />
+                <ui:Button text="Save Game" name="SaveGame_BTN" class="menu-button" />
+                <ui:Button text="Options" name="Options_BTN" class="menu-button" />
+                <ui:Button text="Quit" name="QuitToMenu_BTN" class="menu-button" style="align-items: center;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

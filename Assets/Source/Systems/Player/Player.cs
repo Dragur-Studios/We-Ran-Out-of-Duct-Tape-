@@ -2,6 +2,9 @@ using System;
 using UnityEngine;
 public class Player : MonoBehaviour
 {
+
+    public float HP = 100.0f;
+
     public Action<bool> OnCrouch;
     public Action<bool> OnFocus;
     public Action<bool> OnSprint;
@@ -34,6 +37,11 @@ public class Player : MonoBehaviour
         inventory.Insert(item);
     }
 
+    private void Update()
+    {
+
+    }
+
 
     internal void Initilize()
     {
@@ -47,5 +55,24 @@ public class Player : MonoBehaviour
 
         interaction = GetComponent<PlayerInteractionHandler>() ?? gameObject.AddComponent<PlayerInteractionHandler>();
         inputs = GetComponent<PlayerInputReciever>() ?? gameObject.AddComponent<PlayerInputReciever>();
+
+    }
+
+    internal void TakeDamage(int v)
+    {
+        HP -= v;
+
+        if (HP <= 0)
+        {
+            movement.Lock();
+            cam.Lock();
+            combat.Lock();
+
+            anim.GetComponent<Animator>().CrossFade("Death", 0.1f);
+            GameManager.Instance.PlayerDied();
+            
+
+            return;
+        }
     }
 }

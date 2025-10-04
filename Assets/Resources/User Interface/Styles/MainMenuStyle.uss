@@ -26,3 +26,27 @@
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 10px;
 }
+
+.game-over-button {
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+    max-width: 500px;
+    flex-grow: 1;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    margin-top: 220px;
+    margin-right: 220px;
+    margin-bottom: 220px;
+    margin-left: 220px;
+    width: auto;
+    max-height: 76px;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
+    border-bottom-left-radius: 16px;
+    -unity-font-definition: resource('User Interface/Themes/UnityDefaultRuntimeTheme');
+    -unity-font-style: bold;
+    color: rgb(255, 255, 255);
+    background-color: rgb(101, 101, 101);
+}

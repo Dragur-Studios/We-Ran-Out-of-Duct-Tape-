@@ -2,22 +2,39 @@ using System;
 using Unity.Cinemachine;
 using UnityEngine;
 
+[Serializable]
+public class FeedbackPacket
+{
+    public float CameraShakeFrequency;
+    public float CameraShakeAmplitude;
+    public float CameraShakeDuration;
+
+    public bool IsGamepad;
+    public float GamepadMotorLowFrequency;
+    public float GamepadMotorHighFrequency;
+    public float GamepadMotorFeedbackDuration;
+
+}
+
+
 public class GameCamera : MonoBehaviour
 {
-    public static GameCamera Singleton;
+    public static GameCamera Instance;
     CinemachineCamera cam;
-
-
+    CinemachineBasicMultiChannelPerlin cameraShaker;
+    
     private void Awake()
     {
-        if(Singleton != null && Singleton != this)
+        if(Instance != null && Instance != this)
         {
             Destroy(gameObject);
             return;
         }
 
         DontDestroyOnLoad(gameObject);        
-        Singleton = this;
+
+        Instance = this;
+       
     }
 
     private void Start()
@@ -30,8 +47,9 @@ public class GameCamera : MonoBehaviour
         cam.Target.TrackingTarget = target;
     }
 
+
     public static void Track(Transform target)
     {
-        Singleton.LinkTrackingTarget(target);
+        Instance.LinkTrackingTarget(target);
     }
 }
