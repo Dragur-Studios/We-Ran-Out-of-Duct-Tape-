@@ -588,6 +588,191 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             ]
         },
         {
+            ""name"": ""Vehicle"",
+            ""id"": ""f492e090-8e75-4edb-bf74-22045a2c38ed"",
+            ""actions"": [
+                {
+                    ""name"": ""Gas"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""544904e5-8ac9-49ea-883a-a74d251aaec4"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Brake_Reverse"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""bb5f04e4-5dc4-45fb-b031-3c765c53fd75"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Steer"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""726129fd-7e09-4e98-8675-0b9ade581596"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Exit"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""f445f386-c5b5-4207-9d90-4345a5ff1234"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Lights"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""92004cfd-4108-41ca-9120-08f5e86c32d8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""5794eb9c-6f59-448e-90b0-90f2b4a179d1"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Gas"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8202a1fb-9ead-410c-811c-478185c5b32c"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""Gas"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6e1110e0-30c1-4efb-afd4-0dbb8eaa0ca8"",
+                    ""path"": ""<Keyboard>/leftCtrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Brake_Reverse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""aef333dd-5547-49d3-8212-b4ae2342d848"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Brake_Reverse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""92233a08-f218-4cd4-a4a2-098ceaafb5f3"",
+                    ""path"": ""<Gamepad>/leftStick/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""Steer"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""ed7873a7-e6d8-4e4a-8642-4983d2b30222"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Steer"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""a92840a9-9d9a-4e95-8214-0c9b83c6a03c"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Steer"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""644030e5-aff4-4afa-83d7-57bb68f0cb3d"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Steer"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bb1dc615-8a6d-4d42-beff-aeaca2cf9c7d"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""Exit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""984e602a-dc58-4831-b887-c4315a1c8747"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Exit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c1d7ea61-17e1-4efb-aa6b-086aac8698cd"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Lights"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""017e2fb0-663c-404b-8443-94a233b352ef"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Lights"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
             ""name"": ""UI"",
             ""id"": ""272f6d14-89ba-496f-b7ff-215263d3219f"",
             ""actions"": [
@@ -1149,6 +1334,13 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Player_ItemSlot4 = m_Player.FindAction("ItemSlot4", throwIfNotFound: true);
         m_Player_RotateCamera = m_Player.FindAction("RotateCamera", throwIfNotFound: true);
         m_Player_TryPause = m_Player.FindAction("TryPause", throwIfNotFound: true);
+        // Vehicle
+        m_Vehicle = asset.FindActionMap("Vehicle", throwIfNotFound: true);
+        m_Vehicle_Gas = m_Vehicle.FindAction("Gas", throwIfNotFound: true);
+        m_Vehicle_Brake_Reverse = m_Vehicle.FindAction("Brake_Reverse", throwIfNotFound: true);
+        m_Vehicle_Steer = m_Vehicle.FindAction("Steer", throwIfNotFound: true);
+        m_Vehicle_Exit = m_Vehicle.FindAction("Exit", throwIfNotFound: true);
+        m_Vehicle_Lights = m_Vehicle.FindAction("Lights", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1166,6 +1358,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     ~@PlayerControls()
     {
         UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, PlayerControls.Player.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_Vehicle.enabled, "This will cause a leak and performance issues, PlayerControls.Vehicle.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_UI.enabled, "This will cause a leak and performance issues, PlayerControls.UI.Disable() has not been called.");
     }
 
@@ -1466,6 +1659,146 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     /// Provides a new <see cref="PlayerActions" /> instance referencing this action map.
     /// </summary>
     public PlayerActions @Player => new PlayerActions(this);
+
+    // Vehicle
+    private readonly InputActionMap m_Vehicle;
+    private List<IVehicleActions> m_VehicleActionsCallbackInterfaces = new List<IVehicleActions>();
+    private readonly InputAction m_Vehicle_Gas;
+    private readonly InputAction m_Vehicle_Brake_Reverse;
+    private readonly InputAction m_Vehicle_Steer;
+    private readonly InputAction m_Vehicle_Exit;
+    private readonly InputAction m_Vehicle_Lights;
+    /// <summary>
+    /// Provides access to input actions defined in input action map "Vehicle".
+    /// </summary>
+    public struct VehicleActions
+    {
+        private @PlayerControls m_Wrapper;
+
+        /// <summary>
+        /// Construct a new instance of the input action map wrapper class.
+        /// </summary>
+        public VehicleActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action "Vehicle/Gas".
+        /// </summary>
+        public InputAction @Gas => m_Wrapper.m_Vehicle_Gas;
+        /// <summary>
+        /// Provides access to the underlying input action "Vehicle/Brake_Reverse".
+        /// </summary>
+        public InputAction @Brake_Reverse => m_Wrapper.m_Vehicle_Brake_Reverse;
+        /// <summary>
+        /// Provides access to the underlying input action "Vehicle/Steer".
+        /// </summary>
+        public InputAction @Steer => m_Wrapper.m_Vehicle_Steer;
+        /// <summary>
+        /// Provides access to the underlying input action "Vehicle/Exit".
+        /// </summary>
+        public InputAction @Exit => m_Wrapper.m_Vehicle_Exit;
+        /// <summary>
+        /// Provides access to the underlying input action "Vehicle/Lights".
+        /// </summary>
+        public InputAction @Lights => m_Wrapper.m_Vehicle_Lights;
+        /// <summary>
+        /// Provides access to the underlying input action map instance.
+        /// </summary>
+        public InputActionMap Get() { return m_Wrapper.m_Vehicle; }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+        public void Enable() { Get().Enable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+        public void Disable() { Get().Disable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+        public bool enabled => Get().enabled;
+        /// <summary>
+        /// Implicitly converts an <see ref="VehicleActions" /> to an <see ref="InputActionMap" /> instance.
+        /// </summary>
+        public static implicit operator InputActionMap(VehicleActions set) { return set.Get(); }
+        /// <summary>
+        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <param name="instance">Callback instance.</param>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+        /// </remarks>
+        /// <seealso cref="VehicleActions" />
+        public void AddCallbacks(IVehicleActions instance)
+        {
+            if (instance == null || m_Wrapper.m_VehicleActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_VehicleActionsCallbackInterfaces.Add(instance);
+            @Gas.started += instance.OnGas;
+            @Gas.performed += instance.OnGas;
+            @Gas.canceled += instance.OnGas;
+            @Brake_Reverse.started += instance.OnBrake_Reverse;
+            @Brake_Reverse.performed += instance.OnBrake_Reverse;
+            @Brake_Reverse.canceled += instance.OnBrake_Reverse;
+            @Steer.started += instance.OnSteer;
+            @Steer.performed += instance.OnSteer;
+            @Steer.canceled += instance.OnSteer;
+            @Exit.started += instance.OnExit;
+            @Exit.performed += instance.OnExit;
+            @Exit.canceled += instance.OnExit;
+            @Lights.started += instance.OnLights;
+            @Lights.performed += instance.OnLights;
+            @Lights.canceled += instance.OnLights;
+        }
+
+        /// <summary>
+        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+        /// </remarks>
+        /// <seealso cref="VehicleActions" />
+        private void UnregisterCallbacks(IVehicleActions instance)
+        {
+            @Gas.started -= instance.OnGas;
+            @Gas.performed -= instance.OnGas;
+            @Gas.canceled -= instance.OnGas;
+            @Brake_Reverse.started -= instance.OnBrake_Reverse;
+            @Brake_Reverse.performed -= instance.OnBrake_Reverse;
+            @Brake_Reverse.canceled -= instance.OnBrake_Reverse;
+            @Steer.started -= instance.OnSteer;
+            @Steer.performed -= instance.OnSteer;
+            @Steer.canceled -= instance.OnSteer;
+            @Exit.started -= instance.OnExit;
+            @Exit.performed -= instance.OnExit;
+            @Exit.canceled -= instance.OnExit;
+            @Lights.started -= instance.OnLights;
+            @Lights.performed -= instance.OnLights;
+            @Lights.canceled -= instance.OnLights;
+        }
+
+        /// <summary>
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="VehicleActions.UnregisterCallbacks(IVehicleActions)" />.
+        /// </summary>
+        /// <seealso cref="VehicleActions.UnregisterCallbacks(IVehicleActions)" />
+        public void RemoveCallbacks(IVehicleActions instance)
+        {
+            if (m_Wrapper.m_VehicleActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        /// <summary>
+        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+        /// </remarks>
+        /// <seealso cref="VehicleActions.AddCallbacks(IVehicleActions)" />
+        /// <seealso cref="VehicleActions.RemoveCallbacks(IVehicleActions)" />
+        /// <seealso cref="VehicleActions.UnregisterCallbacks(IVehicleActions)" />
+        public void SetCallbacks(IVehicleActions instance)
+        {
+            foreach (var item in m_Wrapper.m_VehicleActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_VehicleActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    /// <summary>
+    /// Provides a new <see cref="VehicleActions" /> instance referencing this action map.
+    /// </summary>
+    public VehicleActions @Vehicle => new VehicleActions(this);
 
     // UI
     private readonly InputActionMap m_UI;
@@ -1785,6 +2118,49 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnTryPause(InputAction.CallbackContext context);
+    }
+    /// <summary>
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Vehicle" which allows adding and removing callbacks.
+    /// </summary>
+    /// <seealso cref="VehicleActions.AddCallbacks(IVehicleActions)" />
+    /// <seealso cref="VehicleActions.RemoveCallbacks(IVehicleActions)" />
+    public interface IVehicleActions
+    {
+        /// <summary>
+        /// Method invoked when associated input action "Gas" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnGas(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Brake_Reverse" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnBrake_Reverse(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Steer" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSteer(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Exit" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnExit(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Lights" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnLights(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

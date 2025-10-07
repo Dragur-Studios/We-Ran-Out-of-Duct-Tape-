@@ -12,7 +12,7 @@
         <ui:VisualElement name="Content" style="flex-grow: 2; height: 90%;">
             <ui:VisualElement name="QuestsTabContent" style="flex-grow: 1; display: none;" />
             <ui:VisualElement name="PlayerTabContent" style="flex-grow: 1; display: none;" />
-            <ui:VisualElement name="MapTabContent" style="flex-grow: 1; display: flex;">
+            <ui:VisualElement name="MapTabContent" style="flex-grow: 1; display: none;">
                 <ui:VisualElement style="flex-grow: 1; background-image: resource(&apos;User Interface/Components/RP_MiniMap_1920x1080&apos;);" />
             </ui:VisualElement>
             <ui:VisualElement name="InventoryTabContent" style="flex-grow: 1; display: none;" />

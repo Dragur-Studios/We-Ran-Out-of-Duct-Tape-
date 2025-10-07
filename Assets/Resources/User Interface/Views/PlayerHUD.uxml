@@ -1,5 +1,10 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-      <ui:VisualElement name="Crosshair" style="flex-grow: 1;">
-        <ui:VisualElement name="CenterDot" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI%20Toolkit/Circle_512.png?fileID=2800000&amp;guid=a4dc3ad60c2a47d4e98387d077c717e2&amp;type=3#Circle_512&quot;); background-size: 5px 5px;" />
+    <ui:VisualElement name="Crosshair" style="flex-grow: 1;">
+        <ui:VisualElement name="CenterDot" style="flex-grow: 1; background-image: url(&apos;project://database/Assets/UI%20Toolkit/Circle_512.png?fileID=2800000&amp;guid=a4dc3ad60c2a47d4e98387d077c717e2&amp;type=3#Circle_512&apos;); background-size: 5px 5px;" />
+    </ui:VisualElement>
+    <ui:VisualElement name="Interaction_Popup" style="flex-grow: 1; align-items: center; justify-content: center; position: absolute;">
+        <ui:VisualElement style="flex-grow: 1; background-color: rgb(38, 38, 38); width: 100px; height: 50px; position: absolute; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px;">
+            <ui:Label text="Interact" style="height: 44px; -unity-text-align: middle-center; color: rgb(255, 255, 255); -unity-font-style: bold; border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 0;" />
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

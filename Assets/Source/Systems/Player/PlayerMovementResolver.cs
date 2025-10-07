@@ -10,7 +10,7 @@ using UnityEngine.UIElements;
 public class PlayerMovementResolver : MonoBehaviour
 {
     Player player;
-    PlayerInputReciever inputs;
+    GameInputReciever inputs;
     NavMeshAgent agent;
     Camera cam;
 
@@ -43,7 +43,9 @@ public class PlayerMovementResolver : MonoBehaviour
     void Awake()
     {
         player = GetComponent<Player>();
-        inputs = GetComponent<PlayerInputReciever>();
+        inputs = player.Input;
+
+
         agent = GetComponent<NavMeshAgent>();
         cam = Camera.main;
 
@@ -264,8 +266,13 @@ public class PlayerMovementResolver : MonoBehaviour
         currentVelocity = Mathf.MoveTowards(currentVelocity, targetAnimVelocity, Time.deltaTime / runRampTime);
     }
 
-    internal void Lock()
+    public void Lock()
     {
         canMove = false;
+    }
+
+    public void Unlock()
+    {
+        canMove = true;
     }
 }

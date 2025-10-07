@@ -2,7 +2,6 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem; // For New Input System polling
 
-
 public class PlayerCameraHandler : MonoBehaviour
 {
     [SerializeField] private Transform cinemachineAnchor; // Pivot for the camera
@@ -22,7 +21,7 @@ public class PlayerCameraHandler : MonoBehaviour
 
 
     Player player;
-    PlayerInputReciever inputs;
+    GameInputReciever inputs;
 
   
 
@@ -53,7 +52,7 @@ public class PlayerCameraHandler : MonoBehaviour
     private void Start()
     {
         player = GetComponent<Player>();
-        inputs = player.GetComponent<PlayerInputReciever>();
+        inputs = player.Input;
     }
 
     float sk_posT = 0;
@@ -99,8 +98,12 @@ public class PlayerCameraHandler : MonoBehaviour
 
     bool isLock = false;
 
-    internal void Lock()
+    public void Lock()
     {
         isLock = true;
+    }
+    public void Unlock()
+    {
+        isLock = false;
     }
 }

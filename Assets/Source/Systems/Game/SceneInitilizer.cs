@@ -19,7 +19,7 @@ public class SceneInitilizer : MonoBehaviour
             gm.SpawnPlayer(spawnTransform);
         }
         
-        gm.PrepareGameCamera();
+        gm.TrackPlayer();
     }
 
 }

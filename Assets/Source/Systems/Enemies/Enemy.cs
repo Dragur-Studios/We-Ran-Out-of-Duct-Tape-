@@ -1,28 +1,74 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Enemy : SoundWaveListener
+
+[RequireComponent(typeof(EnemyAgent))]
+public class Enemy : MonoBehaviour
 {
-    float HP = 100;
+    [Header("Stats")]
+    [SerializeField] float maxHP = 100f;
+    [SerializeField] float moveSpeed = 2.3f;
+    [SerializeField] int damagePotential = 40;
 
-    EnemyBehaviorResolver behaviorResolver;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [Header("Runtime")]
+    [SerializeField] bool isPlayerHoveringMe = false;
+
+    // Cached components
+    EnemyAgent agent;
+    NavMeshAgent navAgent;
+    Collider mainCollider;
+    Animator animator;
+
+    float hp;
+    bool isDead = false;
+
+    void Awake()
     {
-        behaviorResolver = GetComponent<EnemyBehaviorResolver>();     
+        hp = maxHP;
+        agent = GetComponent<EnemyAgent>();
+        navAgent = GetComponent<NavMeshAgent>() ?? GetComponentInChildren<NavMeshAgent>();
+        mainCollider = GetComponent<Collider>();
+        animator = GetComponentInChildren<Animator>();
     }
 
-
-    protected override void ReactToSoundHeard(Vector3 sourcePos, string tag)
+    void Update()
     {
-        behaviorResolver.AlertToPlayer(sourcePos);
+        if (hp <= 0f) Die();
     }
 
-    // Update is called once per frame
+    public void DealDamage(float value)
+    {
+        if (isDead) return;
+        hp -= value;
+        if (hp <= 0f) Die();
+    }
 
-    public bool isPlayerHoveringMe = false;
+    public int GetDamage() => damagePotential;
+    public float GetHP() => hp;
+    public bool IsDead() => isDead;
 
-    public void SetLayer(string layerName)
+    public void SetIsPlayerLookingAtMe(bool v)
+    {
+        isPlayerHoveringMe = v;
+        SetLayer(isPlayerHoveringMe ? "Enemy - Outline" : "Enemy");
+    }
+
+    void Die()
+    {
+        if (isDead) return;
+        SetIsPlayerLookingAtMe(false);
+        isDead = true;
+
+        animator?.SetTrigger("Death");
+        if (mainCollider != null) mainCollider.enabled = false;
+        if (agent != null) agent.enabled = false;
+        if (navAgent != null) navAgent.enabled = false;
+
+        // Let other components (like EnemySoundWaveListener) clean themselves up
+        SendMessage("OnEnemyDied", SendMessageOptions.DontRequireReceiver);
+    }
+
+    void SetLayer(string layerName)
     {
         int layerIndex = LayerMask.NameToLayer(layerName);
         if (layerIndex == -1)
@@ -32,58 +78,7 @@ public class Enemy : SoundWaveListener
         }
 
         gameObject.layer = layerIndex;
-
-        var skinnedMeshes = GetComponentsInChildren<SkinnedMeshRenderer>();
-        foreach (var mesh in skinnedMeshes)
-        {
-            mesh.gameObject.layer = layerIndex;
-        }
-    }
-
-
-    void Update()
-    {
-
-        SetLayer(isPlayerHoveringMe ? "Enemy - Outline" : "Enemy");
-
-
-        if (HP <= 0)
-        {
-            var anim = GetComponentInChildren<Animator>();
-            anim.SetTrigger("Death");
-
-            var col = GetComponent<Collider>();
-            col.enabled = false;
-
-            behaviorResolver.enabled = false;
-
-            var nma = col.GetComponent<NavMeshAgent>();
-            nma.enabled = false;
-
-            SoundWaveManager.RemoveListener(this);
-
-        }
-    }
-
-    private void LateUpdate()
-    {
-        isPlayerHoveringMe = false;
-    }
-
-    public void DealDamage(float value)
-    {
-        HP -= value;
-    }
-
-    [SerializeField] int DamagePotential = 40;
-
-    internal int GetDamage()
-    {
-        return DamagePotential;
-    }
-
-    public  void SetIsPlayerLookingAtMe(bool v)
-    {
-        isPlayerHoveringMe = v;
+        foreach (var r in GetComponentsInChildren<Renderer>(true))
+            r.gameObject.layer = layerIndex;
     }
 }

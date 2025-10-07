@@ -52,7 +52,7 @@ public class HandIKTarget
 public class PlayerRigOrchastrator : MonoBehaviour
 {
     PlayerCombatHandler combat;
-    PlayerInputReciever inputs;
+    GameInputReciever inputs;
     Player player;
 
     Weapon equippedWeapon;

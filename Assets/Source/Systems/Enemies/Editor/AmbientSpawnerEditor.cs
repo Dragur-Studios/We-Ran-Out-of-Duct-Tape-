@@ -1,48 +1,79 @@
 using UnityEngine;
-using UnityEditor;
+using UnityEngine.AI;
+using System.Collections.Generic;
 
-[CustomEditor(typeof(AmbientSpawner))]
-public class AmbientSpawnerEditor : Editor
+public class AmbientSpawner : MonoBehaviour
 {
-    private void OnSceneGUI()
-    {
-        AmbientSpawner spawner = (AmbientSpawner)target;
+    public SpawnVolumeType volumeType;
+    public float spawnRadius = 10f;
+    public Vector3 spawnExtents = new Vector3(5, 5, 5);
+    public LayerMask obstructionMask;
+    public int maxSpawnTries = 5;
+    public float clearanceRadius = 0.5f;
 
-        // Sphere volume handle
-        if (spawner.volumeType == SpawnVolumeType.Sphere)
+    Queue<GameObject> retryQueue = new Queue<GameObject>();
+
+    public void Spawn(GameObject prefab)
+    {
+        Vector3 pos;
+        if (TryFindValidSpawnPoint(out pos))
         {
-            EditorGUI.BeginChangeCheck();
-            float newRadius = Handles.RadiusHandle(
-                Quaternion.identity,
-                spawner.transform.position,
-                spawner.spawnRadius
-            );
-            if (EditorGUI.EndChangeCheck())
+            Instantiate(prefab, pos, Quaternion.identity);
+        }
+        else
+        {
+            retryQueue.Enqueue(prefab);
+        }
+    }
+
+    bool TryFindValidSpawnPoint(out Vector3 result)
+    {
+        for (int i = 0; i < maxSpawnTries; i++)
+        {
+            Vector3 candidate = RandomPointInVolume();
+            candidate += Vector3.up * 2f; 
+
+            if (Physics.SphereCast(candidate, clearanceRadius, Vector3.down, out RaycastHit hit, 10f, ~0, QueryTriggerInteraction.Ignore))
             {
-                Undo.RecordObject(spawner, "Change Spawn Radius");
-                spawner.spawnRadius = newRadius;
+                Vector3 groundPos = hit.point;
+
+                if (!Physics.CheckSphere(groundPos, clearanceRadius, obstructionMask))
+                {
+                    if (NavMesh.SamplePosition(groundPos, out NavMeshHit navHit, 1.0f, NavMesh.AllAreas))
+                    {
+                        result = navHit.position;
+                        return true;
+                    }
+                }
             }
         }
 
-        // Cuboid volume handle
-        else if (spawner.volumeType == SpawnVolumeType.Cuboid)
+        result = Vector3.zero;
+        return false;
+    }
+
+    Vector3 RandomPointInVolume()
+    {
+        if (volumeType == SpawnVolumeType.Sphere)
         {
-            EditorGUI.BeginChangeCheck();
-            Vector3 newExtents = spawner.spawnExtents;
-
-            // Draw a box handle (centered on transform)
-            newExtents = Handles.ScaleHandle(
-                newExtents,
-                spawner.transform.position,
-                spawner.transform.rotation,
-                HandleUtility.GetHandleSize(spawner.transform.position)
+            return transform.position + Random.insideUnitSphere * spawnRadius;
+        }
+        else 
+        {
+            return transform.position + new Vector3(
+                Random.Range(-spawnExtents.x, spawnExtents.x),
+                Random.Range(-spawnExtents.y, spawnExtents.y),
+                Random.Range(-spawnExtents.z, spawnExtents.z)
             );
+        }
+    }
 
-            if (EditorGUI.EndChangeCheck())
-            {
-                Undo.RecordObject(spawner, "Change Spawn Extents");
-                spawner.spawnExtents = newExtents;
-            }
+    void Update()
+    {
+        if (retryQueue.Count > 0)
+        {
+            GameObject prefab = retryQueue.Dequeue();
+            Spawn(prefab);
         }
     }
 }

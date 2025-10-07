@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1941924107133472110}
   - component: {fileID: 3352688660096093}
   - component: {fileID: 820534487358825663}
-  m_Layer: 21
+  m_Layer: 7
   m_Name: Bullet Projectile
   m_TagString: BulletProjectile
   m_Icon: {fileID: 0}
@@ -110,6 +110,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 91319d540e88354488b665f7aeab322e, type: 3}
       propertyPath: m_Name
       value: FX_Bullet_Trail
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 91319d540e88354488b665f7aeab322e, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 91319d540e88354488b665f7aeab322e, type: 3}
       propertyPath: m_LocalPosition.x

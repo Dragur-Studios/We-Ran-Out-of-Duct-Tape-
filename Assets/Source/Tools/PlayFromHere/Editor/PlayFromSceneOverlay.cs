@@ -1,4 +1,5 @@
 ﻿#if UNITY_2021_2_OR_NEWER
+using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEditor.Overlays;
@@ -7,218 +8,227 @@ using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-[Overlay(typeof(SceneView), "Play From Scene (List)")]
-public class PlayFromSceneListOverlay : Overlay
+[Overlay(typeof(SceneView), "Build Settings Overlay")]
+public class BuildSettingsOverlay : Overlay
 {
-    private static string cachedScenePath;
-    private static SceneAsset playModeOverrideScene;
+    // Simple data model mirroring EditorBuildSettingsScene
+    private class BuildSceneEntry
+    {
+        public string path;
+        public bool enabled;
+        public string Name => string.IsNullOrEmpty(path) ? "(None)" : System.IO.Path.GetFileNameWithoutExtension(path);
+    }
 
     private ListView sceneListView;
-    private SceneAsset[] allScenes;
-
-    private const string PrefKey = "PlayFromSceneListOverlay.SelectedScenePath";
+    private List<BuildSceneEntry> buildScenes = new List<BuildSceneEntry>();
 
     public override VisualElement CreatePanelContent()
     {
         var root = new VisualElement { style = { flexDirection = FlexDirection.Column } };
 
-        // --- Controls row at top, centered ---
+        // Controls row
         var controls = new VisualElement
         {
             style =
             {
                 flexDirection = FlexDirection.Row,
                 justifyContent = Justify.Center,
-                marginBottom = 4
+                marginBottom = 4,
             }
         };
 
-        var playButton = new ToolbarToggle { text = EditorApplication.isPlaying ? "■" : "▶" };
-        playButton.AddToClassList("unity-toolbar-button");
-        playButton.RegisterValueChangedCallback(evt =>
-        {
-            if (evt.newValue)
-            {
-                if (playModeOverrideScene != null)
-                    CacheAndPlay();
-                else
-                    EditorApplication.isPlaying = true;
-            }
-            else
-            {
-                EditorApplication.isPlaying = false;
-            }
-        });
+        var buildButton = new ToolbarButton(BuildAndRun) { text = "▶ Build & Run" };
+        buildButton.AddToClassList("unity-toolbar-button");
 
-        var pauseButton = new ToolbarToggle { text = "⏸" };
-        pauseButton.AddToClassList("unity-toolbar-button");
-        pauseButton.RegisterValueChangedCallback(evt => EditorApplication.isPaused = evt.newValue);
+        var refreshButton = new ToolbarButton(RefreshFromBuildSettings) { text = "⟳" };
+        refreshButton.AddToClassList("unity-toolbar-button");
 
-        var stepButton = new ToolbarButton(() => EditorApplication.Step()) { text = "⏭" };
-        stepButton.AddToClassList("unity-toolbar-button");
-
-        EditorApplication.playModeStateChanged += _ =>
-        {
-            playButton.text = EditorApplication.isPlaying ? "■" : "▶";
-            playButton.SetValueWithoutNotify(EditorApplication.isPlaying);
-            pauseButton.SetValueWithoutNotify(EditorApplication.isPaused);
-        };
-
-        controls.Add(playButton);
-        controls.Add(pauseButton);
-        controls.Add(stepButton);
+        controls.Add(buildButton);
+        controls.Add(refreshButton);
         root.Add(controls);
 
-        // --- Gather all scenes (only Assets/Scenes) ---
-        string[] guids = AssetDatabase.FindAssets("t:Scene", new[] { "Assets/Scenes" });
-        allScenes = guids
-            .Select(g => AssetDatabase.LoadAssetAtPath<SceneAsset>(AssetDatabase.GUIDToAssetPath(g)))
-            .Where(s => s != null)
-            .OrderBy(s => s.name)
-            .ToArray();
+        // Load from Build Settings
+        RefreshFromBuildSettings();
 
-        if (allScenes.Length == 0)
+        // ListView setup
+        sceneListView = new ListView(buildScenes, itemHeight: 22, makeItem: MakeItem, bindItem: BindItem)
         {
-            root.Add(new Label("No scenes found in Assets/Scenes"));
-            return root;
-        }
-
-        // Restore last selection from prefs
-        var savedPath = EditorPrefs.GetString(PrefKey, "");
-        if (!string.IsNullOrEmpty(savedPath))
-        {
-            playModeOverrideScene = AssetDatabase.LoadAssetAtPath<SceneAsset>(savedPath);
-        }
-
-        // --- Scene List with Toggle + ObjectField ---
-        sceneListView = new ListView
-        {
-            itemsSource = allScenes,
-            fixedItemHeight = 22,
+            reorderable = true,
+            showBoundCollectionSize = false,
+            showFoldoutHeader = false,
+            virtualizationMethod = CollectionVirtualizationMethod.DynamicHeight,
             selectionType = SelectionType.None,
             style = { flexGrow = 1 }
         };
 
-        sceneListView.makeItem = () =>
+        // Handle reorder: adjust our list and commit
+        sceneListView.itemIndexChanged += (oldIndex, newIndex) =>
         {
-            var row = new VisualElement { style = { flexDirection = FlexDirection.Row } };
+            if (oldIndex == newIndex || oldIndex < 0 || newIndex < 0 || oldIndex >= buildScenes.Count || newIndex >= buildScenes.Count)
+                return;
 
-            var toggle = new Toggle { style = { width = 18, marginRight = 4 } };
-            var field = new ObjectField
-            {
-                objectType = typeof(SceneAsset),
-                allowSceneObjects = false,
-                style = { flexGrow = 1 }
-            };
-
-            row.Add(toggle);
-            row.Add(field);
-            return row;
-        };
-
-        sceneListView.bindItem = (element, i) =>
-        {
-            var row = (VisualElement)element;
-            var toggle = row.Q<Toggle>();
-            var field = row.Q<ObjectField>();
-
-            var scene = allScenes[i];
-            field.value = scene;
-
-            // Enable/disable ObjectField based on toggle
-            toggle.value = (playModeOverrideScene == scene);
-            field.SetEnabled(toggle.value);
-
-            toggle.RegisterValueChangedCallback(evt =>
-            {
-                field.SetEnabled(evt.newValue);
-                if (evt.newValue)
-                {
-                    playModeOverrideScene = scene;
-                    EditorPrefs.SetString(PrefKey, AssetDatabase.GetAssetPath(scene));
-
-                    // Uncheck all other toggles
-                    for (int j = 0; j < sceneListView.itemsSource.Count; j++)
-                    {
-                        if (j == i) continue;
-                        var otherRow = sceneListView.GetRootElementForIndex(j);
-                        if (otherRow != null)
-                        {
-                            var otherToggle = otherRow.Q<Toggle>();
-                            if (otherToggle != null)
-                                otherToggle.SetValueWithoutNotify(false);
-                            var otherField = otherRow.Q<ObjectField>();
-                            if (otherField != null)
-                                otherField.SetEnabled(false);
-                        }
-                    }
-                }
-                else if (playModeOverrideScene == scene)
-                {
-                    playModeOverrideScene = null;
-                    EditorPrefs.DeleteKey(PrefKey);
-                }
-            });
-
-            // Double‑click to open scene
-            field.RegisterCallback<MouseDownEvent>(evt =>
-            {
-                if (evt.clickCount == 2 && toggle.value && scene != null)
-                {
-                    if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
-                    {
-                        EditorSceneManager.OpenScene(AssetDatabase.GetAssetPath(scene));
-                    }
-                }
-            });
-
-            // Assigning a new scene via ObjectField
-            field.RegisterValueChangedCallback(evt =>
-            {
-                if (toggle.value)
-                {
-                    playModeOverrideScene = (SceneAsset)evt.newValue;
-                    if (playModeOverrideScene != null)
-                        EditorPrefs.SetString(PrefKey, AssetDatabase.GetAssetPath(playModeOverrideScene));
-                }
-            });
+            var item = buildScenes[oldIndex];
+            buildScenes.RemoveAt(oldIndex);
+            buildScenes.Insert(newIndex, item);
+            CommitToBuildSettings();
+            sceneListView.Rebuild();
         };
 
         root.Add(sceneListView);
+
+        // Add current scene if missing
+        var currentScene = EditorSceneManager.GetActiveScene();
+        if (!string.IsNullOrEmpty(currentScene.path))
+        {
+            bool exists = buildScenes.Any(s => s.path == currentScene.path);
+            if (!exists)
+            {
+                var addButton = new Button(() =>
+                {
+                    buildScenes.Add(new BuildSceneEntry
+                    {
+                        path = currentScene.path,
+                        enabled = true
+                    });
+                    CommitToBuildSettings();
+                    sceneListView.Rebuild();
+                })
+                { text = $"Add Current Scene ({currentScene.name})" };
+
+                root.Add(addButton);
+            }
+        }
+
         return root;
     }
 
-    private void CacheAndPlay()
+    private VisualElement MakeItem()
     {
-        if (playModeOverrideScene == null) return;
+        var row = new VisualElement { style = { flexDirection = FlexDirection.Row } };
 
-        var currentScene = EditorSceneManager.GetActiveScene();
-        if (currentScene.isDirty)
+        var toggle = new Toggle { style = { width = 18, marginRight = 4 } };
+        var field = new ObjectField
         {
-            if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
-                return;
-        }
-        cachedScenePath = currentScene.path;
+            objectType = typeof(SceneAsset),
+            allowSceneObjects = false,
+            style = { flexGrow = 1 }
+        };
 
-        EditorSceneManager.playModeStartScene = playModeOverrideScene;
-        EditorApplication.isPlaying = true;
-        EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
+        row.Add(toggle);
+        row.Add(field);
+        return row;
     }
 
-    private void OnPlayModeStateChanged(PlayModeStateChange state)
+    private void BindItem(VisualElement element, int index)
     {
-        if (state == PlayModeStateChange.EnteredEditMode)
+        if (index < 0 || index >= buildScenes.Count) return;
+
+        var data = buildScenes[index];
+        var toggle = element.Q<Toggle>();
+        var field = element.Q<ObjectField>();
+
+        // Bind toggle
+        toggle.SetValueWithoutNotify(data.enabled);
+        toggle.RegisterValueChangedCallback(evt =>
         {
-            EditorSceneManager.playModeStartScene = null;
+            data.enabled = evt.newValue;
+            CommitToBuildSettings();
+        });
 
-            if (!string.IsNullOrEmpty(cachedScenePath))
-            {
-                EditorSceneManager.OpenScene(cachedScenePath);
-                cachedScenePath = null;
-            }
+        // Bind scene field
+        var sceneAsset = string.IsNullOrEmpty(data.path) ? null : AssetDatabase.LoadAssetAtPath<SceneAsset>(data.path);
+        field.SetValueWithoutNotify(sceneAsset);
+        field.RegisterValueChangedCallback(evt =>
+        {
+            var newScene = evt.newValue as SceneAsset;
+            data.path = newScene ? AssetDatabase.GetAssetPath(newScene) : string.Empty;
+            // If path is cleared, default to disabled
+            if (string.IsNullOrEmpty(data.path))
+                data.enabled = false;
 
-            EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
+            CommitToBuildSettings();
+            // Rebind to reflect any changes
+            var updatedAsset = string.IsNullOrEmpty(data.path) ? null : AssetDatabase.LoadAssetAtPath<SceneAsset>(data.path);
+            field.SetValueWithoutNotify(updatedAsset);
+            toggle.SetValueWithoutNotify(data.enabled);
+        });
+    }
+
+    private void RefreshFromBuildSettings()
+    {
+        buildScenes = EditorBuildSettings.scenes
+            .Select(s => new BuildSceneEntry { path = s.path, enabled = s.enabled })
+            .ToList();
+
+        if (sceneListView != null)
+        {
+            sceneListView.itemsSource = buildScenes;
+            sceneListView.Rebuild();
         }
+    }
+
+    private void CommitToBuildSettings()
+    {
+        // Filter out any entries without a valid path
+        var validEntries = buildScenes
+            .Where(s => !string.IsNullOrEmpty(s.path))
+            .Select(s => new EditorBuildSettingsScene(s.path, s.enabled))
+            .ToArray();
+
+        EditorBuildSettings.scenes = validEntries;
+        // Keep our model in sync with any canonicalization
+        RefreshFromBuildSettings();
+    }
+
+    private void BuildAndRun()
+    {
+        // Ensure latest list is committed
+        CommitToBuildSettings();
+
+        var enabledScenes = EditorBuildSettings.scenes
+            .Where(s => s.enabled)
+            .Select(s => s.path)
+            .ToArray();
+
+        if (enabledScenes.Length == 0)
+        {
+            Debug.LogWarning("No enabled scenes in Build Settings.");
+            return;
+        }
+
+        string buildPathBase = "Builds/OverlayBuild/OverlayGame";
+        string buildPath = buildPathBase;
+
+        switch (EditorUserBuildSettings.activeBuildTarget)
+        {
+            case BuildTarget.StandaloneWindows:
+            case BuildTarget.StandaloneWindows64:
+                buildPath = buildPathBase + ".exe";
+                break;
+            case BuildTarget.StandaloneOSX:
+                buildPath = buildPathBase + ".app";
+                break;
+            case BuildTarget.StandaloneLinux64:
+                buildPath = buildPathBase; // Linux creates a folder with executable inside
+                break;
+            default:
+                buildPath = buildPathBase; // Other platforms manage their own extensions/folders
+                break;
+        }
+
+        var dir = System.IO.Path.GetDirectoryName(buildPath);
+        if (!string.IsNullOrEmpty(dir))
+            System.IO.Directory.CreateDirectory(dir);
+
+        var buildPlayerOptions = new BuildPlayerOptions
+        {
+            scenes = enabledScenes,
+            locationPathName = buildPath,
+            target = EditorUserBuildSettings.activeBuildTarget,
+            options = BuildOptions.AutoRunPlayer
+        };
+
+        BuildPipeline.BuildPlayer(buildPlayerOptions);
     }
 }
 #endif

@@ -5,8 +5,8 @@ public class SoundWaveListener : MonoBehaviour
 {
     [SerializeField] float sensitivity = 1f; // how well this listener hears
 
-    private void OnEnable() => SoundWaveManager.AddListener(this);
-    private void OnDisable() => SoundWaveManager.RemoveListener(this);
+    protected virtual void OnEnable() => SoundWaveManager.AddListener(this);
+    protected virtual void OnDisable() => SoundWaveManager.RemoveListener(this);
     public void OnSoundHeard(Vector3 sourcePos, float intensity, string tag)
     {
         ReactToSoundHeard(sourcePos, tag);

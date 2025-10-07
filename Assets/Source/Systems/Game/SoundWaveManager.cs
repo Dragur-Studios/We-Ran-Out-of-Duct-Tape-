@@ -6,16 +6,6 @@ public class SoundWaveManager : MonoBehaviour
 {
     static SoundWaveManager _instance;
     public static SoundWaveManager Instance {  get { return _instance; } }
-    //{
-    //    get
-    //    {
-    //        if (_instance == null) 
-    //        {
-    //            _instance = new GameObject("Sound Wave Manager(SIMULATION MODE)").AddComponent<SoundWaveManager>();
-    //        }
-    //        return _instance;
-    //    }
-    //}
 
     List<SoundWaveEmitter> emitters = new List<SoundWaveEmitter>();
     List<SoundWaveListener> listeners = new List<SoundWaveListener>();

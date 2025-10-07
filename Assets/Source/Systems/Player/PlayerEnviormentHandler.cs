@@ -3,7 +3,7 @@ using UnityEngine;
 public class PlayerEnviormentHandler : MonoBehaviour
 {
     Player player;
-    PlayerInputReciever inputs;
+    GameInputReciever inputs;
 
 
     [SerializeField] GameObject gasMask;

@@ -2,6 +2,10 @@ using System;
 using UnityEngine;
 public class Player : MonoBehaviour
 {
+    private void Awake()
+    {
+        inputs = GameInputReciever.Instance;
+    }
 
     public float HP = 100.0f;
 
@@ -15,7 +19,7 @@ public class Player : MonoBehaviour
     PlayerAnimationResolver anim;
     PlayerCameraHandler cam;
     PlayerInteractionHandler interaction;
-    PlayerInputReciever inputs;
+    GameInputReciever inputs;
     PlayerCombatHandler combat;
     
 
@@ -24,7 +28,7 @@ public class Player : MonoBehaviour
     public PlayerAnimationResolver Animator { get => anim; }
     public PlayerCameraHandler Camera { get => cam; }
     public PlayerInteractionHandler Interaction { get => interaction; } 
-    public PlayerInputReciever Input { get => inputs; }
+    public GameInputReciever Input { get => inputs; }
     public PlayerCombatHandler Combat { get => combat; }
 
     public void SetCrouch(bool crouching) => OnCrouch?.Invoke(crouching);
@@ -42,9 +46,15 @@ public class Player : MonoBehaviour
 
     }
 
+    public bool IsDead()
+    {
+        return HP <= 0;
+    }
 
     internal void Initilize()
     {
+        
+
         inventory = GetComponent<PlayerInventory>() ?? gameObject.AddComponent<PlayerInventory>();
         movement = GetComponent<PlayerMovementResolver>() ?? gameObject.AddComponent<PlayerMovementResolver>();
         anim = GetComponentInChildren<PlayerAnimationResolver>();
@@ -54,7 +64,8 @@ public class Player : MonoBehaviour
         cam.SetPlayer(this);
 
         interaction = GetComponent<PlayerInteractionHandler>() ?? gameObject.AddComponent<PlayerInteractionHandler>();
-        inputs = GetComponent<PlayerInputReciever>() ?? gameObject.AddComponent<PlayerInputReciever>();
+       
+
 
     }
 
@@ -74,5 +85,19 @@ public class Player : MonoBehaviour
 
             return;
         }
+    }
+
+    public void OnEnterVehicle()
+    {
+        movement.Lock();
+        cam.Lock();
+        combat.Lock();
+    }
+
+    public void OnExitVehicle()
+    {
+        movement.Unlock();
+        cam.Unlock();
+        combat.Unlock();
     }
 }
